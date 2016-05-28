@@ -121,6 +121,19 @@ function createNewWorkspace() {
   var newWorkspaceObj = {};
   newWorkspaceObj[key] = newWorkspace;
   chrome.storage.sync.set(newWorkspaceObj);
+
+  showNewWorkspace(key, workspaceName);
+}
+
+function showNewWorkspace(id, workspaceNameText) {
+  var workspaceBtn = document.createElement("button");
+  workspaceBtn.id = id;
+  workspaceBtn.onclick = function() {openWorkspace(this.id);}
+
+  var workspaceName = document.createTextNode(workspaceNameText);
+
+  workspaceBtn.appendChild(workspaceName);
+  workspaces.appendChild(workspaceBtn);
 }
 
 function openWorkspace(id) {
