@@ -15,21 +15,15 @@ function loadWorkspaces() {
 
     var workspaces = document.getElementById("workspaces");
     for (var i = 0; i < workspaceList.length; i++) {
-      var id = workspaceList[i];
+      var id = workspaceList[i].id;
       var workspaceBtn = document.createElement("button");
       workspaceBtn.id = id;
       workspaceBtn.onclick = function() {openWorkspace(this.id);}
 
-      var workspaceObj = {};
-      workspaceObj[id] = [];
+      var workspaceNameText = workspaceList[i].name;
+      var workspaceName = document.createTextNode(workspaceNameText);
 
-      chrome.storage.sync.get(workspaceObj, function(data) {
-        var workspace = data[id];
-        var workspaceNameText = workspace.name;
-        var workspaceName = document.createTextNode(workspaceNameText);
-        workspaceBtn.appendChild(workspaceName);
-      });
-
+      workspaceBtn.appendChild(workspaceName);
       workspaces.appendChild(workspaceBtn);
     }
   });
@@ -108,11 +102,16 @@ function createNewWorkspace() {
   } while (exists);
 
   var key = "workspace" + id;
+  var workspaceName = document.getElementById("workspaceName").value;
 
-  workspaceList.push(key);
+  workspaceListObj = {
+    id: key,
+    name: workspaceName
+  }
+
+  workspaceList.push(workspaceListObj);
   chrome.storage.sync.set({workspaceList: workspaceList});
 
-  var workspaceName = document.getElementById("workspaceName").value;
   var newWorkspace = {
     id: key,
     name: workspaceName,
