@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+
+  "name": "Workspace Launcher",
+  "description": "Quickly Launch Custom Workspaces",
+  "version": "1.0",
+
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+
+  "permissions": [
+    "tabs"
+  ]
+
+}
