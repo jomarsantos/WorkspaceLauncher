@@ -1,20 +1,54 @@
 var numPinnedTabs = 0;
 var numRegularTabs = 0;
-var workspaceList = [];
+var workspaces = [];
 
 // Create New Workspace
-document.getElementById("createNewWorkspace").onclick = createNewWorkspace;
+document.getElementById("createNewWorkspace").onclick = function() {
+  var workspaceTabs = [];
+  var pinnedTabs = document.getElementsByClassName("pinnedTab");
+  var regularTabs = document.getElementsByClassName("regularTab");
+  var exists = false;
+  var tab, i, id, key, workspaceName, newWorkspace, newWorkspaceObj;
+
+  for (i = 0; i < pinnedTabs.length; i++) {
+    tab = {
+      url: pinnedTabs[i].value,
+      pinned: true,
+      active: false
+    }
+    workspaceTabs.push(tab);
+  }
+
+  for (i = 0; i < regularTabs.length; i++) {
+    tab = {
+      url: regularTabs[i].value,
+      pinned: false,
+      active: false
+    }
+    workspaceTabs.push(tab);
+  }
+
+  workspaceName = document.getElementById("workspaceName").value;
+
+  newWorkspace = {
+    name: workspaceName,
+    tabs: workspaceTabs
+  }
+
+  workspaces.push(newWorkspace);
+  chrome.storage.sync.set({workspaces: workspaces});
+
+  showNewWorkspace(workspaceName);
+}
 
 // Add Pinned Tab Entry
 document.getElementById("addPinnedTab").onclick = function() {
-  addTab(true, "pinnedTab", numPinnedTabs);
-  numPinnedTabs++;
+  addTab(true, "pinnedTab", numPinnedTabs++);
 };
 
 // Add Regular Tab Entry
 document.getElementById("addRegularTab").onclick = function() {
-  addTab(false, "regularTab", numRegularTabs);
-  numRegularTabs++;
+  addTab(false, "regularTab", numRegularTabs++);
 };
 
 // Add Tab Entry
@@ -46,110 +80,62 @@ function addTab(pinned, type, id) {
   tabs.appendChild(container);
 }
 
-// Store New Workspace
-function createNewWorkspace() {
-  var workspaceTabs = [];
-  var pinnedTabs = document.getElementsByClassName("pinnedTab");
-  var regularTabs = document.getElementsByClassName("regularTab");
-  var exists = false;
-  var tab, i, id, key, workspaceName, newWorkspace, newWorkspaceObj;
-
-  for (i = 0; i < pinnedTabs.length; i++) {
-    tab = {
-      url: pinnedTabs[i].value,
-      pinned: true,
-      active: false
-    }
-    workspaceTabs.push(tab);
-  }
-
-  for (i = 0; i < regularTabs.length; i++) {
-    tab = {
-      url: regularTabs[i].value,
-      pinned: false,
-      active: false
-    }
-    workspaceTabs.push(tab);
-  }
-
-  do {
-    id = Math.floor(Math.random() * 100) + 1;
-    for (i = 0; i < workspaceList.length; i++) {
-      if (workspaceList[i] == id) {
-        exists = true;
-        break;
-      }
-    }
-  } while (exists);
-
-  key = "workspace" + id;
-  workspaceName = document.getElementById("workspaceName").value;
-
-  workspaceListObj = {
-    id: key,
-    name: workspaceName
-  }
-
-  workspaceList.push(workspaceListObj);
-  chrome.storage.sync.set({workspaceList: workspaceList});
-
-  newWorkspace = {
-    id: key,
-    name: workspaceName,
-    tabs: workspaceTabs
-  }
-
-  newWorkspaceObj = {};
-  newWorkspaceObj[key] = newWorkspace;
-  chrome.storage.sync.set(newWorkspaceObj);
-
-  showNewWorkspace(key, workspaceName);
-}
-
 // Add New Workspace to View
-function showNewWorkspace(id, workspaceNameText) {
+function showNewWorkspace(workspaceNameText) {
+  var workspacesDiv = document.getElementById("workspaces");
   var workspaceBtn = document.createElement("button");
   var workspaceName = document.createTextNode(workspaceNameText);
 
-  workspaceBtn.id = id;
-  workspaceBtn.onclick = function() {openWorkspace(this.id);}
+  workspaceBtn.id = workspaceNameText;
+  workspaceBtn.onclick = function() {
+    openWorkspace(workspaceNameText);
+  }
   workspaceBtn.appendChild(workspaceName);
-
-  workspaces.appendChild(workspaceBtn);
+  workspacesDiv.appendChild(workspaceBtn);
 }
 
 // Open Workspace Clicked
-function openWorkspace(id) {
-  var workspaceObj = {};
-  var tabs, i;
+function openWorkspace(workspaceName) {
+  var i;
+  var tabs = [];
+  var workspace = {};
 
-  workspaceObj[id] = [];
-  chrome.storage.sync.get(workspaceObj, function(data) {
-    tabs = data[id].tabs;
-    for (i = 0; i < tabs.length; i++) {
-      chrome.tabs.create(tabs[i]);
+  workspace = getWorkspace(workspaceName);
+  tabs = workspace.tabs;
+
+  for (i = 0; i < tabs.length; i++) {
+    chrome.tabs.create(tabs[i]);
+  }
+}
+
+// Returns workspace of given name
+function getWorkspace(workspaceName) {
+  for (i = 0; i < workspaces.length; i++) {
+    if (workspaces[i].name == workspaceName) {
+      return workspaces[i];
     }
-  });
+  }
 }
 
 // Load Workspaces on Startup
 function loadWorkspaces() {
-  var workspaces = document.getElementById("workspaces");
-  var i, id, workspaceBtn, workspaceNameText, workspaceName;
+  var workspacesDiv = document.getElementById("workspaces");
+  var i, workspaceBtn, workspaceNameText, workspaceName;
 
-  chrome.storage.sync.get({workspaceList: []}, function(data) {
-    workspaceList = data.workspaceList;
+  chrome.storage.sync.get({workspaces: []}, function(data) {
+    workspaces = data.workspaces;
 
-    for (i = 0; i < workspaceList.length; i++) {
-      id = workspaceList[i].id;
-      workspaceNameText = workspaceList[i].name;
+    for (i = 0; i < workspaces.length; i++) {
+      workspaceNameText = workspaces[i].name;
       workspaceName = document.createTextNode(workspaceNameText);
 
       workspaceBtn = document.createElement("button");
-      workspaceBtn.id = id;
-      workspaceBtn.onclick = function() {openWorkspace(this.id);}
+      workspaceBtn.id = workspaceNameText;
+      workspaceBtn.onclick = function() {
+        openWorkspace(workspaceNameText);
+      }
       workspaceBtn.appendChild(workspaceName);
-      workspaces.appendChild(workspaceBtn);
+      workspacesDiv.appendChild(workspaceBtn);
     }
   });
 }
