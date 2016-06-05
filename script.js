@@ -18,7 +18,7 @@ document.addEventListener('mouseup', function (e) {
   var container = document.getElementById("newWorkspaceContainer");
   var addButton = document.getElementById("addButton");
 
-  if (!container.contains(e.target) && (e.target != addButton)) {
+  if (!container.contains(e.target) && e.target != addButton && !addButton.contains(e.target)) {
       container.style.display = 'none';
   }
 }.bind(this));
