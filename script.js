@@ -2,6 +2,18 @@ var numPinnedTabs = 0;
 var numRegularTabs = 0;
 var workspaces = [];
 
+// Show New Workspace Dialogue
+document.getElementById("addButton").onclick = function() {
+  var container = document.getElementById("newWorkspaceContainer");
+
+  if (container.style.display == 'block') {
+    container.style.display = 'none';
+  } else {
+    container.style.display = 'block';
+  }
+}
+
+
 // Create New Workspace
 document.getElementById("createNewWorkspace").onclick = function() {
   var workspaceTabs = [];
