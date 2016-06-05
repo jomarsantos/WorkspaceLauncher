@@ -2,7 +2,7 @@ var numPinnedTabs = 0;
 var numRegularTabs = 0;
 var workspaces = [];
 
-// Show New Workspace Dialogue
+// Toggle New Workspace Dialogue
 document.getElementById("addButton").onclick = function() {
   var container = document.getElementById("newWorkspaceContainer");
 
@@ -12,6 +12,16 @@ document.getElementById("addButton").onclick = function() {
     container.style.display = 'block';
   }
 }
+
+// Hide New Workspace Dialogue On Mouse Click Elsewhere
+document.addEventListener('mouseup', function (e) {
+  var container = document.getElementById("newWorkspaceContainer");
+  var addButton = document.getElementById("addButton");
+
+  if (!container.contains(e.target) && (e.target != addButton)) {
+      container.style.display = 'none';
+  }
+}.bind(this));
 
 
 // Create New Workspace
