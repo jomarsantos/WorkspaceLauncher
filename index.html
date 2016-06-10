@@ -2,39 +2,46 @@
 <html>
   <head>
     <title>Workspace Launcher</title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
     <header>
-      <button type="button" class="btn btn-circle" id="editButton">
-        <i class="glyphicon glyphicon-edit"></i>
-      </button>
-      <button type="button" class="btn btn-circle" id="addButton">
-        <i class="glyphicon glyphicon-plus"></i>
-      </button>
+      <!-- <button type="button" class="button" id="editButton">edit</button> -->
+      <button type="button" class="button" id="addButton">&#43;</button>
     </header>
 
     <div id="workspaces">
       Workspaces: <br />
     </div>
 
+
+
+
     <div id="newWorkspaceContainer">
-      <div id="pinnedTabs">
-        Pinned URLs: <br />
-      </div>
-      <button id="addPinnedTab">Add Tab</button>
+      <a id="closeDialogue">&times;</a>
 
-      <div id="regularTabs">
-        URLs: <br />
-      </div>
-      <button id="addRegularTab">Add Tab</button>
+      <div id="newWorkspaceForm">
+        <div id="pinnedTabs">
+          PINNED TABS: <br />
+        </div>
+        <button id="addPinnedTab">Add Tab</button>
 
-      <br />
-      <br />
-      Workspace Name: <input id="workspaceName" type="text">
-      <br />
-      <input id="createNewWorkspace" type="submit" value="Create New Workspace">
+        <br />
+        <br />
+        <div id="regularTabs">
+          TABS: <br />
+        </div>
+        <button id="addRegularTab">Add Tab</button>
+
+        <br />
+        <br />
+        WORKSPACE NAME:
+        <br />
+        <input id="workspaceName" type="text">
+        <br />
+        <br />
+        <button class="button" id="createNewWorkspace" type="submit">CREATE WORKSPACE</button>
+      </div>
     </div>
 
 

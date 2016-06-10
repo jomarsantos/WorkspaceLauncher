@@ -6,22 +6,30 @@ var workspaces = [];
 document.getElementById("addButton").onclick = function() {
   var container = document.getElementById("newWorkspaceContainer");
 
-  if (container.style.display == 'block') {
-    container.style.display = 'none';
+  if (container.style.width == '300px') {
+    container.style.width = '0px';
   } else {
-    container.style.display = 'block';
+    container.style.width = '300px';
   }
 }
+
+// Hide New Workspace Dialogue on X Click
+document.getElementById("closeDialogue").onclick = closeDialogue();
 
 // Hide New Workspace Dialogue On Mouse Click Elsewhere
 document.addEventListener('mouseup', function (e) {
   var container = document.getElementById("newWorkspaceContainer");
-  var addButton = document.getElementById("addButton");
+  var exitButton = document.getElementById("closeDialogue");
 
-  if (!container.contains(e.target) && e.target != addButton && !addButton.contains(e.target)) {
-      container.style.display = 'none';
+  if (!container.contains(e.target) || e.target == exitButton) {
+    closeDialogue();
   }
 }.bind(this));
+
+function closeDialogue() {
+  var container = document.getElementById("newWorkspaceContainer");
+  container.style.width = '0px';
+}
 
 
 // Create New Workspace
