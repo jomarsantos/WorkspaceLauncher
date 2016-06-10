@@ -6,17 +6,21 @@
   "version": "1.0",
 
   "browser_action": {
-    /*"default_icon": {
-      "19": "images/icon19.png",
-      "38": "images/icon38.png"
-    },*/
-    "default_title": "WorkspaceLauncher",
+    "default_icon": {
+      "19": "images/19.png",
+      "38": "images/38.png"
+    },
+    "default_title": "Workspace Launcher",
     "default_popup": "popup.html"
   },
 
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
+
+  "icons": { "16": "images/16.png",
+           "48": "images/48.png",
+          "128": "images/128.png" },
 
   "permissions": [
     "tabs",
