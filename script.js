@@ -69,6 +69,8 @@ document.getElementById("createNewWorkspace").onclick = function() {
   chrome.storage.sync.set({workspaces: workspaces});
 
   showNewWorkspace(workspaceName);
+  resetForm();
+  closeDialogue();
 }
 
 // Add Pinned Tab Entry
@@ -87,7 +89,7 @@ function addTab(pinned, type, id) {
   var container = document.createElement("div");
   var newTabInput = document.createElement("input");
   var removeBtn = document.createElement("button");
-  var removeText = document.createTextNode("Remove");
+  var removeText = document.createTextNode("x");
   var br = document.createElement("br");
 
   newTabInput.className = type;
@@ -97,6 +99,7 @@ function addTab(pinned, type, id) {
   newTabInput.value = "http://";
 
   removeBtn.id = "removePinnedTab" + id;
+  removeBtn.className = "removeTabBtn";
   removeBtn.onclick = function() {
     this.parentNode.remove();
   }
@@ -170,4 +173,17 @@ function loadWorkspaces() {
   });
 }
 
+function resetForm() {
+  numRegularTabs = 0;
+  numPinnedTabs = 0;
+  var tabs = document.getElementsByClassName('tabEntryContainer');
+  while(tabs[0]) {
+    tabs[0].parentNode.removeChild(tabs[0]);
+  }
+  addTab(false, "regularTab", numRegularTabs++);
+  var nameInput = document.getElementsByClassName('workspaceName');
+  nameInput.value = "";
+}
+
+addTab(false, "regularTab", numRegularTabs++);
 loadWorkspaces();

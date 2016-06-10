@@ -47,6 +47,7 @@ header {
   top: 10px;
   right: 10px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 #newWorkspaceContainer {
@@ -81,6 +82,20 @@ header {
   font-size: 14px;
 }
 
+#newWorkspaceTitle {
+  text-align: center;
+  font-size: 24px;
+  display: block;
+  width: 260px;
+}
+
+.newWorkspaceSubTitle {
+  font-size: 14px;
+  display: block;
+  width: 260px;
+  margin: 0px;
+}
+
 #newWorkspaceForm input {
   border: 0;
   outline: 0;
@@ -92,8 +107,8 @@ header {
 
 #createNewWorkspace {
   left: 50%;
-  margin-left: -100px;
-  width: 200px;
+  margin-left: -50px;
+  width: 100px;
   font-family: "Avenir Next LT Pro Demi";
   font-size: 12px;
   background-color: #000000;
@@ -102,8 +117,50 @@ header {
   border-width: 2px;
   border-color: #FFFFFF;
   color: #FFFFFF;
+  cursor: pointer;
 }
 
 #createNewWorkspace:hover {
   background-color: #0F1112;
+}
+
+.removeTabBtn {
+  background: transparent;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+}
+
+.addTabBtn {
+  background-color: #0F0F0F;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: #7E8087;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+.addTabBtn:focus {
+  outline: 0;
+}
+
+.addTabBtn:hover {
+  background-color: #121212;
+  color: #A8AAB3;
+}
+
+.tabEntryContainer {
+  width: 300px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+#workspaceName {
+  padding-top: 4px;
 }
