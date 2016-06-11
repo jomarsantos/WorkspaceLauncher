@@ -45,16 +45,20 @@ header {
 }
 
 #addButton {
-  top: 10px;
-  right: 10px;
-  font-size: 16px;
+  padding: 0px;
+  height: auto;
+  width: auto;
+  margin-left: 2px;
+  margin-top: -1px;
+  display: inline;
+  font-size: 20px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.3);
-  color: #FFFFFF;
+  color: #F0F4F5;
+  background: transparent;
 }
 
 #addButton:hover {
-  background: rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
 }
 
 #newWorkspaceContainer {
@@ -182,6 +186,7 @@ header {
   padding-left: 35px;
   opacity: 0.8;
   cursor: pointer;
+  display: inline-block;
 }
 
 .mainTitle:hover {
@@ -193,14 +198,30 @@ header {
 }
 
 #workspacesTitle {
-  width: 50px;
+  margin-left: 35px;
+  padding: 0px;
+  width: 180px;
+  background: transparent;
+  border: none;
+}
+
+#workspacesTitle:focus {
+  outline: 0;
 }
 
 #backButton {
   position: absolute;
   display: none;
-  margin-top: -30px;
-  right: 35px;
+  right: 30px;
+  width: 110px;
+  margin: 0px;
+  padding: 0px;
+  background: transparent;
+  border: none;
+}
+
+#backButton:focus {
+  outline: 0;
 }
 
 #workspacesContainer {
