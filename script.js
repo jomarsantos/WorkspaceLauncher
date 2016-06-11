@@ -2,6 +2,68 @@ var numPinnedTabs = 0;
 var numRegularTabs = 0;
 var workspaces = [];
 
+// Left Scroll
+document.getElementById("directionArrowWorkspaceLeft").onclick = function() {
+  var workspacesContainer = document.getElementById("workspaces");
+  var workspace = document.getElementsByClassName("workspace");
+  var diff = workspacesContainer.scrollLeft % 170;
+  workspacesContainer.scrollLeft = workspacesContainer.scrollLeft - diff - 510;
+}
+
+// Right Scroll
+document.getElementById("directionArrowWorkspaceRight").onclick = function() {
+  var workspacesContainer = document.getElementById("workspaces");
+  var workspace = document.getElementsByClassName("workspace");
+  workspacesContainer.scrollLeft = workspacesContainer.scrollLeft + 680;
+}
+
+// Toggle All Workspace View
+document.getElementById("workspacesTitle").onclick = function() {
+  var workspaces = document.getElementById("workspaces");
+  var workspacesContainer = document.getElementById("workspacesContainer");
+  var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
+  var rightArrow = document.getElementById("directionArrowWorkspaceRight");
+  var backButton = document.getElementById("backButton");
+
+  if (workspaces.style.height == '300px') {
+    workspaces.style.height = '150px';
+    workspaces.style.overflow = 'scroll';
+    workspaces.style.overflowY = 'hidden';
+    workspaces.style.whiteSpace = 'nowrap';
+    workspacesContainer.style.overflow = 'hidden';
+    leftArrow.style.display = 'inline-block';
+    rightArrow.style.display = 'inline-block';
+    backButton.style.display = 'none';
+  } else {
+    workspaces.style.height = '300px';
+    workspaces.style.overflow = 'visible';
+    workspaces.style.overflowY = 'visible';
+    workspaces.style.whiteSpace = 'normal';
+    workspacesContainer.style.overflow = 'visible';
+    leftArrow.style.display = 'none';
+    rightArrow.style.display = 'none';
+    backButton.style.display = 'inline';
+  }
+}
+
+// Toggle All Workspace View
+document.getElementById("backButton").onclick = function() {
+  var workspaces = document.getElementById("workspaces");
+  var workspacesContainer = document.getElementById("workspacesContainer");
+  var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
+  var rightArrow = document.getElementById("directionArrowWorkspaceRight");
+  var backButton = document.getElementById("backButton");
+
+  workspaces.style.height = '150px';
+  workspaces.style.overflow = 'scroll';
+  workspaces.style.overflowY = 'hidden';
+  workspaces.style.whiteSpace = 'nowrap';
+  workspacesContainer.style.overflow = 'hidden';
+  leftArrow.style.display = 'inline-block';
+  rightArrow.style.display = 'inline-block';
+  backButton.style.display = 'none';
+}
+
 // Toggle New Workspace Dialogue
 document.getElementById("addButton").onclick = function() {
   var container = document.getElementById("newWorkspaceContainer");
@@ -170,7 +232,7 @@ function loadWorkspaces() {
       var workspaceName = document.createElement("h3");
       workspaceName.className = "workspaceName";
       workspaceName.innerHTML = workspaceNameText.toUpperCase();
-      
+
       workspaceBtn = document.createElement("button");
       workspaceBtn.className = 'workspace';
       workspaceBtn.id = workspaceNameText;
@@ -191,7 +253,7 @@ function resetForm() {
     tabs[0].parentNode.removeChild(tabs[0]);
   }
   addTab(false, "regularTab", numRegularTabs++);
-  var nameInput = document.getElementsByClassName('workspaceName');
+  var nameInput = document.getElementById('workspaceName');
   nameInput.value = "";
 }
 

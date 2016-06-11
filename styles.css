@@ -180,6 +180,27 @@ header {
   letter-spacing: 1px;
   margin: 0px;
   padding-left: 35px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.mainTitle:hover {
+  opacity: 1;
+}
+
+#containerHeader {
+  clear: both;
+}
+
+#workspacesTitle {
+  width: 50px;
+}
+
+#backButton {
+  position: absolute;
+  display: none;
+  margin-top: -30px;
+  right: 35px;
 }
 
 #workspacesContainer {
@@ -195,9 +216,9 @@ header {
 #workspaces {
   position: absolute;
   height: 150px;
-  width: 660px;
+  width: 680px;
   left: 50%;
-  margin-left: -330px;
+  margin-left: -340px;
   padding-bottom: 30px;
   overflow:scroll;
   overflow-y: hidden;
@@ -206,7 +227,9 @@ header {
 
 .workspace {
   padding: 0px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
   position: relative;
   height: 150px;
   width: 150px;
@@ -255,18 +278,11 @@ header {
   outline: 0;
 }
 
-#directionArrowWorkspaceLeft {
-}
-
 #directionArrowWorkspaceRight {
   right: 0px;
 }
 
 @media screen and (max-width: 700px) {
-  /*#workspacesContainer {
-    width: 510px;
-    margin-left: -245px;
-  }*/
 
   #workspacesContainer {
     margin-top: 50px;
@@ -281,9 +297,9 @@ header {
   #workspaces {
     position: absolute;
     height: 150px;
-    width: 490px;
+    width: 510px;
     left: 50%;
-    margin-left: -245px;
+    margin-left: -255px;
     padding-bottom: 30px;
     overflow:scroll;
     overflow-y: hidden;
@@ -293,7 +309,24 @@ header {
 
 @media screen and (max-width: 560px) {
   #workspacesContainer {
-    width: 340px;
-    margin-left: -170px;
+    margin-top: 50px;
+    position: absolute;
+    height: 200px;
+    width: 390px;
+    margin-left: -195px;
+    left: 50%;
+    overflow: hidden;
   }
+
+  #workspaces {
+    position: absolute;
+    height: 150px;
+    width: 340px;
+    left: 50%;
+    margin-left: -170px;
+    padding-bottom: 30px;
+    overflow:scroll;
+    overflow-y: hidden;
+    white-space:nowrap;
+  }1
 }
