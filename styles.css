@@ -45,13 +45,13 @@ header {
 }
 
 #addButton {
+  right: 40px;
+  top: -4px;
   padding: 0px;
   height: auto;
   width: auto;
-  margin-left: 2px;
-  margin-top: -1px;
   display: inline;
-  font-size: 20px;
+  font-size: 28px;
   cursor: pointer;
   color: #F0F4F5;
   background: transparent;
@@ -60,6 +60,25 @@ header {
 #addButton:hover {
   color: #FFFFFF;
 }
+
+#showAll {
+  position: absolute;
+  top: 6px;
+  right: 65px;
+  margin: 0px;
+  padding: 0px;
+  font-size: 14px;
+  display: inline;
+  height: 20px;
+  width: 90px;
+  background: none;
+  border: none;
+}
+
+#showAll:focus {
+  outline: 0;
+}
+
 
 #newWorkspaceContainer {
   height: 100%;
@@ -203,20 +222,24 @@ header {
   width: 180px;
   background: transparent;
   border: none;
+  cursor: default;
 }
 
-#workspacesTitle:focus {
-  outline: 0;
+#workspacesTitle:hover {
+  opacity: 0.8;
 }
 
 #backButton {
-  position: absolute;
   display: none;
-  right: 30px;
-  width: 110px;
+  position: absolute;
+  top: 7px;
+  right: 45px;
   margin: 0px;
   padding: 0px;
-  background: transparent;
+  font-size: 14px;
+  height: 20px;
+  width: 90px;
+  background: none;
   border: none;
 }
 
@@ -303,7 +326,7 @@ header {
   right: 0px;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 760px) {
 
   #workspacesContainer {
     margin-top: 50px;

@@ -18,12 +18,14 @@ document.getElementById("directionArrowWorkspaceRight").onclick = function() {
 }
 
 // Toggle All Workspace View
-document.getElementById("workspacesTitle").onclick = function() {
+document.getElementById("showAll").onclick = function() {
   var workspaces = document.getElementById("workspaces");
   var workspacesContainer = document.getElementById("workspacesContainer");
   var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
   var rightArrow = document.getElementById("directionArrowWorkspaceRight");
   var backButton = document.getElementById("backButton");
+  var showAllButton = document.getElementById("showAll");
+
 
   if (workspaces.style.height == 'auto') {
     workspaces.style.height = '150px';
@@ -35,6 +37,7 @@ document.getElementById("workspacesTitle").onclick = function() {
     leftArrow.style.display = 'inline-block';
     rightArrow.style.display = 'inline-block';
     backButton.style.display = 'none';
+    showAllButton.style.display = 'inline';
   } else {
     workspaces.style.height = 'auto';
     workspaces.style.overflow = 'visible';
@@ -45,6 +48,7 @@ document.getElementById("workspacesTitle").onclick = function() {
     leftArrow.style.display = 'none';
     rightArrow.style.display = 'none';
     backButton.style.display = 'inline';
+    showAllButton.style.display = 'none';
   }
 }
 
@@ -55,6 +59,7 @@ document.getElementById("backButton").onclick = function() {
   var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
   var rightArrow = document.getElementById("directionArrowWorkspaceRight");
   var backButton = document.getElementById("backButton");
+  var showAllButton = document.getElementById("showAll");
 
   workspaces.style.height = '150px';
   workspaces.style.overflow = 'scroll';
@@ -64,6 +69,7 @@ document.getElementById("backButton").onclick = function() {
   leftArrow.style.display = 'inline-block';
   rightArrow.style.display = 'inline-block';
   backButton.style.display = 'none';
+  showAllButton.style.display = 'inline';
 }
 
 // Toggle New Workspace Dialogue
