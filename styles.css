@@ -1,6 +1,6 @@
 body {
-  /*background-color: #111;*/
-   background-image: url("images/workspace.jpg");
+  background-attachment: fixed;
+  background-position: center;    background-image: url("images/workspace.jpg");
 }
 
 header {
@@ -33,7 +33,6 @@ header {
 .button:hover {
   background-color: #F2F2F2;
   color: #A8AAB3;
-  opacity: 0.6;
 }
 
 .button:focus {
@@ -50,7 +49,12 @@ header {
   right: 10px;
   font-size: 16px;
   cursor: pointer;
-  opacity: 0.4;
+  background: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+#addButton:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 #newWorkspaceContainer {
@@ -67,7 +71,7 @@ header {
   color: #FFFFFF;
   font-family: "Avenir Next LT Medium";
   font-size: 16px;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 #closeDialogue {
@@ -167,4 +171,49 @@ header {
 
 #workspaceName {
   padding-top: 4px;
+}
+
+.mainTitle {
+  font-family: "Avenir Next LT Pro Demi";
+  font-size: 24px;
+  color: #FFFFFF;
+  letter-spacing: 1px;
+  margin: 0px;
+}
+
+#workspaces {
+  margin-top: 50px;
+  position: absolute;
+  width: 680px;
+  margin-left: -300px;
+  left: 50%;
+}
+
+.workspace {
+  padding: 0px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  height: 150px;
+  width: 150px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+}
+
+.workspace:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.workspace:focus {
+  outline: 0;
+}
+
+.workspaceName {
+  font-family: "Avenir Next LT Pro Demi";
+  font-size: 12px;
+  letter-spacing: 1px;
 }

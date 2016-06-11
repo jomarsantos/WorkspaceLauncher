@@ -120,8 +120,12 @@ function addTab(pinned, type, id) {
 function showNewWorkspace(workspaceNameText) {
   var workspacesDiv = document.getElementById("workspaces");
   var workspaceBtn = document.createElement("button");
-  var workspaceName = document.createTextNode(workspaceNameText);
+  var workspaceName = document.createElement("h3");
+  workspaceName.className = "workspaceName";
+  workspaceName.innerHTML = workspaceNameText.toUpperCase();
 
+  workspaceBtn = document.createElement("button");
+  workspaceBtn.className = 'workspace';
   workspaceBtn.id = workspaceNameText;
   workspaceBtn.onclick = function() {
     openWorkspace(workspaceNameText);
@@ -163,9 +167,12 @@ function loadWorkspaces() {
 
     for (i = 0; i < workspaces.length; i++) {
       workspaceNameText = workspaces[i].name;
-      workspaceName = document.createTextNode(workspaceNameText);
-
+      var workspaceName = document.createElement("h3");
+      workspaceName.className = "workspaceName";
+      workspaceName.innerHTML = workspaceNameText.toUpperCase();
+      
       workspaceBtn = document.createElement("button");
+      workspaceBtn.className = 'workspace';
       workspaceBtn.id = workspaceNameText;
       workspaceBtn.onclick = function() {
         openWorkspace(workspaceNameText);
