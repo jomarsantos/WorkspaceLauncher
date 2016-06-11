@@ -25,21 +25,23 @@ document.getElementById("workspacesTitle").onclick = function() {
   var rightArrow = document.getElementById("directionArrowWorkspaceRight");
   var backButton = document.getElementById("backButton");
 
-  if (workspaces.style.height == '300px') {
+  if (workspaces.style.height == 'auto') {
     workspaces.style.height = '150px';
     workspaces.style.overflow = 'scroll';
     workspaces.style.overflowY = 'hidden';
     workspaces.style.whiteSpace = 'nowrap';
     workspacesContainer.style.overflow = 'hidden';
+    workspacesContainer.style.marginBottom = "0px";
     leftArrow.style.display = 'inline-block';
     rightArrow.style.display = 'inline-block';
     backButton.style.display = 'none';
   } else {
-    workspaces.style.height = '300px';
+    workspaces.style.height = 'auto';
     workspaces.style.overflow = 'visible';
     workspaces.style.overflowY = 'visible';
     workspaces.style.whiteSpace = 'normal';
     workspacesContainer.style.overflow = 'visible';
+    workspaces.style.marginBottom = "80px";
     leftArrow.style.display = 'none';
     rightArrow.style.display = 'none';
     backButton.style.display = 'inline';
