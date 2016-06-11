@@ -5,10 +5,12 @@ var workspaces = [];
 // Toggle New Workspace Dialogue
 document.getElementById("addButton").onclick = function() {
   var container = document.getElementById("newWorkspaceContainer");
+  var addButton = document.getElementById("addButton");
 
   if (container.style.width == '300px') {
     container.style.width = '0px';
   } else {
+    addButton.style.display = 'none';
     container.style.width = '300px';
   }
 }
@@ -29,6 +31,7 @@ document.addEventListener('mouseup', function (e) {
 function closeDialogue() {
   var container = document.getElementById("newWorkspaceContainer");
   container.style.width = '0px';
+  addButton.style.display = 'block';
 }
 
 

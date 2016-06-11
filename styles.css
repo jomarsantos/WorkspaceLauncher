@@ -1,5 +1,6 @@
 body {
-  background-color: #111;
+  /*background-color: #111;*/
+   background-image: url("images/workspace.jpg");
 }
 
 header {
@@ -23,15 +24,16 @@ header {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  background-color: #141518;
+  background-color: #FFFFFF;
   color: #7E8087;
   border: none;
   border-radius: 5px;
 }
 
 .button:hover {
-  background-color: #131417;
+  background-color: #F2F2F2;
   color: #A8AAB3;
+  opacity: 0.6;
 }
 
 .button:focus {
@@ -48,6 +50,7 @@ header {
   right: 10px;
   font-size: 16px;
   cursor: pointer;
+  opacity: 0.4;
 }
 
 #newWorkspaceContainer {
@@ -64,6 +67,7 @@ header {
   color: #FFFFFF;
   font-family: "Avenir Next LT Medium";
   font-size: 16px;
+  opacity: 0.5;
 }
 
 #closeDialogue {
