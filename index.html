@@ -5,7 +5,36 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <div id="workspacesContainer">
+
+
+
+
+    <div id="main">
+      <div class="indexContainer" id="workspacesContainer">
+        <div id="workspacesHeader">
+          <h1 class="mainTitle" id="workspacesTitle">WORKSPACES</h1>
+        </div> <!-- workspacesHeader -->
+        <div id="workspaces">
+          <template id="workspaceTemplate">
+            <div class="workspace">
+              <button class="removeTab">
+                <h3 class="workspaceName"></h3>
+              </button>
+            </div>
+          </template>
+        </div> <!-- workspaces -->
+      </div> <!-- workspacesContainer -->
+
+      <div class="indexContainer" id="favoritesContainer">
+        <div id="favoritesHeader">
+        </div> <!-- favoritesHeader -->
+        <div id="favorites">
+        </div> <!-- favorites -->
+      </div> <!-- favoritesContainer -->
+    </div> <!-- main -->
+
+
+    <!-- <div id="workspacesContainer">
       <div id="containerHeader">
         <h1 class="mainTitle" id="workspacesTitle">WORKSPACES</h1>
 
@@ -19,7 +48,7 @@
       <div id="workspaces">
       </div>
       <button class="directionArrow" id="directionArrowWorkspaceRight">></button>
-    </div>
+    </div> -->
 
 
 
