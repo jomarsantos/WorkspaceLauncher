@@ -24,36 +24,46 @@
 
 
 
-    <div id="newWorkspaceContainer">
-      <a id="closeDialogue">&times;</a>
-
-      <div id="newWorkspaceForm">
-        <h1 id="newWorkspaceTitle">NEW WORKSPACE</h1>
-
-        <div id="pinnedTabs">
-          <h2 class="newWorkspaceSubTitle">PINNED TABS:</h2>
-        </div>
-        <button class="addTabBtn" id="addPinnedTab">+</button>
-        <br />
-        <br />
-
-        <div id="regularTabs">
-          <h2 class="newWorkspaceSubTitle">REGULAR TABS:</h2>
-        </div>
-        <button class="addTabBtn" id="addRegularTab">+</button>
-        <br />
-        <br />
-
-        <h2 class="newWorkspaceSubTitle">WORKSPACE NAME:</h2>
-        <input id="workspaceName" type="text">
-        <br />
-        <br />
-
-        <button class="button" id="createNewWorkspace" type="submit">CREATE</button>
-      </div>
-    </div>
 
 
-    <script src="script.js"></script>
+    <div id="sidebar">
+      <a id="closeSidebar">&times;</a>
+
+      <div id="workspaceForm">
+        <h4>WORKSPACE</h4>
+        <h6>DETAILS</h6>
+
+        <div id="pinnedTabsContainer">
+          <h5>PINNED TABS</h5>
+          <div id="pinnedTabs">
+          </div> <!-- pinnedTabs -->
+          <button class="addTabButton" id="addPinnedTab">+ TAB</button>
+        </div> <!-- pinnedTabsContainer -->
+
+        <div id="regularTabsContainer">
+          <h5>REGULAR TABS</h5>
+          <div id="regularTabs">
+          </div> <!-- regularTabs -->
+          <button class="addTabButton" id="addRegularTab">+ TAB</button>
+        </div> <!-- regularTabsContainer -->
+
+        <template id="tabTemplate">
+          <div>
+            <input type="text" name="tab" value="http://">
+            <button class="removeTab">&times;</button>
+          </div>
+        </template>
+
+        <div id="nameContainer">
+          <h5>WORKSPACE NAME</h5>
+          <input  type="text" id="workspaceName">
+        </div> <!-- nameContainer -->
+
+        <button class="button" id="saveWorkspace" type="submit">SAVE</button>
+      </div> <!-- workspaceForm -->
+    </div> <!-- newWorkspaceContainer -->
+
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="script.js" type="text/javascript"></script>
   </body>
 </html>

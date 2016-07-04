@@ -2,115 +2,47 @@ var numPinnedTabs = 0;
 var numRegularTabs = 0;
 var workspaces = [];
 
-// Left Scroll
-document.getElementById("directionArrowWorkspaceLeft").onclick = function() {
-  var workspacesContainer = document.getElementById("workspaces");
-  var workspace = document.getElementsByClassName("workspace");
-  var diff = workspacesContainer.scrollLeft % 170;
-  workspacesContainer.scrollLeft = workspacesContainer.scrollLeft - diff - 510;
-}
+/////////////////////////
+// TAB ENTRY
+/////////////////////////
 
-// Right Scroll
-document.getElementById("directionArrowWorkspaceRight").onclick = function() {
-  var workspacesContainer = document.getElementById("workspaces");
-  var workspace = document.getElementsByClassName("workspace");
-  workspacesContainer.scrollLeft = workspacesContainer.scrollLeft + 680;
-}
+// Add Pinned Tab Entry
+document.getElementById("addPinnedTab").onclick = function() {
+  numPinnedTabs++;
+  addTab("pinnedTab");
+};
 
-// Toggle All Workspace View
-document.getElementById("showAll").onclick = function() {
-  var workspaces = document.getElementById("workspaces");
-  var workspacesContainer = document.getElementById("workspacesContainer");
-  var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
-  var rightArrow = document.getElementById("directionArrowWorkspaceRight");
-  var backButton = document.getElementById("backButton");
-  var showAllButton = document.getElementById("showAll");
+// Add Regular Tab Entry
+document.getElementById("addRegularTab").onclick = function() {
+  numRegularTabs++;
+  addTab("regularTab");
+};
 
+// Add Tab Entry
+function addTab(type) {
+  var tabs = document.getElementById(type + "s");
+  var tab = document.querySelector("#tabTemplate");
+  var clone = document.importNode(tab.content, true);
+  var input = clone.querySelector("input");
+  var removeTab = clone.querySelector("button");
 
-  if (workspaces.style.height == 'auto') {
-    workspaces.style.height = '150px';
-    workspaces.style.overflow = 'scroll';
-    workspaces.style.overflowY = 'hidden';
-    workspaces.style.whiteSpace = 'nowrap';
-    workspacesContainer.style.overflow = 'hidden';
-    workspacesContainer.style.marginBottom = "0px";
-    leftArrow.style.display = 'inline-block';
-    rightArrow.style.display = 'inline-block';
-    backButton.style.display = 'none';
-    showAllButton.style.display = 'inline';
-  } else {
-    workspaces.style.height = 'auto';
-    workspaces.style.overflow = 'visible';
-    workspaces.style.overflowY = 'visible';
-    workspaces.style.whiteSpace = 'normal';
-    workspacesContainer.style.overflow = 'visible';
-    workspaces.style.marginBottom = "80px";
-    leftArrow.style.display = 'none';
-    rightArrow.style.display = 'none';
-    backButton.style.display = 'inline';
-    showAllButton.style.display = 'none';
+  input.className = type;
+  removeTab.onclick = function() {
+    this.parentNode.remove();
   }
+  tabs.appendChild(clone);
 }
 
-// Toggle All Workspace View
-document.getElementById("backButton").onclick = function() {
-  var workspaces = document.getElementById("workspaces");
-  var workspacesContainer = document.getElementById("workspacesContainer");
-  var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
-  var rightArrow = document.getElementById("directionArrowWorkspaceRight");
-  var backButton = document.getElementById("backButton");
-  var showAllButton = document.getElementById("showAll");
-
-  workspaces.style.height = '150px';
-  workspaces.style.overflow = 'scroll';
-  workspaces.style.overflowY = 'hidden';
-  workspaces.style.whiteSpace = 'nowrap';
-  workspacesContainer.style.overflow = 'hidden';
-  leftArrow.style.display = 'inline-block';
-  rightArrow.style.display = 'inline-block';
-  backButton.style.display = 'none';
-  showAllButton.style.display = 'inline';
-}
-
-// Toggle New Workspace Dialogue
-document.getElementById("addButton").onclick = function() {
-  var container = document.getElementById("newWorkspaceContainer");
-  var addButton = document.getElementById("addButton");
-
-  if (container.style.width == '300px') {
-    container.style.width = '0px';
-  } else {
-    container.style.width = '300px';
-  }
-}
-
-// Hide New Workspace Dialogue on X Click
-document.getElementById("closeDialogue").onclick = closeDialogue();
-
-// Hide New Workspace Dialogue On Mouse Click Elsewhere
-document.addEventListener('mouseup', function (e) {
-  var container = document.getElementById("newWorkspaceContainer");
-  var exitButton = document.getElementById("closeDialogue");
-
-  if (!container.contains(e.target) || e.target == exitButton) {
-    closeDialogue();
-  }
-}.bind(this));
-
-function closeDialogue() {
-  var container = document.getElementById("newWorkspaceContainer");
-  container.style.width = '0px';
-  addButton.style.display = 'inline';
-}
-
+/////////////////////////
+// WORKSPACES
+/////////////////////////
 
 // Create New Workspace
-document.getElementById("createNewWorkspace").onclick = function() {
+document.getElementById("saveWorkspace").onclick = function() {
   var workspaceTabs = [];
   var pinnedTabs = document.getElementsByClassName("pinnedTab");
   var regularTabs = document.getElementsByClassName("regularTab");
-  var exists = false;
-  var tab, i, id, key, workspaceName, newWorkspace, newWorkspaceObj;
+  var tab, i, workspaceName, newWorkspace;
 
   for (i = 0; i < pinnedTabs.length; i++) {
     tab = {
@@ -141,48 +73,8 @@ document.getElementById("createNewWorkspace").onclick = function() {
   chrome.storage.sync.set({workspaces: workspaces});
 
   showNewWorkspace(workspaceName);
-  resetForm();
   closeDialogue();
-}
-
-// Add Pinned Tab Entry
-document.getElementById("addPinnedTab").onclick = function() {
-  addTab(true, "pinnedTab", numPinnedTabs++);
-};
-
-// Add Regular Tab Entry
-document.getElementById("addRegularTab").onclick = function() {
-  addTab(false, "regularTab", numRegularTabs++);
-};
-
-// Add Tab Entry
-function addTab(pinned, type, id) {
-  var tabs = document.getElementById(type + "s");
-  var container = document.createElement("div");
-  var newTabInput = document.createElement("input");
-  var removeBtn = document.createElement("button");
-  var removeText = document.createTextNode("x");
-  var br = document.createElement("br");
-
-  newTabInput.className = type;
-  newTabInput.id = type + id;
-  newTabInput.type = "text";
-  newTabInput.name = "tab";
-  newTabInput.value = "http://";
-
-  removeBtn.id = "removePinnedTab" + id;
-  removeBtn.className = "removeTabBtn";
-  removeBtn.onclick = function() {
-    this.parentNode.remove();
-  }
-  removeBtn.appendChild(removeText);
-
-  container.className = "tabEntryContainer";
-  container.appendChild(newTabInput);
-  container.appendChild(removeBtn);
-  container.appendChild(br);
-
-  tabs.appendChild(container);
+  resetForm();
 }
 
 // Add New Workspace to View
@@ -255,7 +147,7 @@ function loadWorkspaces() {
 function resetForm() {
   numRegularTabs = 0;
   numPinnedTabs = 0;
-  var tabs = document.getElementsByClassName('tabEntryContainer');
+  var tabs = document.getElementsByClassName('tab');
   while(tabs[0]) {
     tabs[0].parentNode.removeChild(tabs[0]);
   }
@@ -264,5 +156,135 @@ function resetForm() {
   nameInput.value = "";
 }
 
-addTab(false, "regularTab", numRegularTabs++);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Left Scroll
+document.getElementById("directionArrowWorkspaceLeft").onclick = function() {
+  var workspacesContainer = document.getElementById("workspaces");
+  var workspace = document.getElementsByClassName("workspace");
+  var diff = workspacesContainer.scrollLeft % 170;
+  workspacesContainer.scrollLeft = workspacesContainer.scrollLeft - diff - 510;
+}
+
+// Right Scroll
+document.getElementById("directionArrowWorkspaceRight").onclick = function() {
+  var workspacesContainer = document.getElementById("workspaces");
+  var workspace = document.getElementsByClassName("workspace");
+  workspacesContainer.scrollLeft = workspacesContainer.scrollLeft + 680;
+}
+
+// Toggle All Workspace View
+document.getElementById("showAll").onclick = function() {
+  var workspaces = document.getElementById("workspaces");
+  var workspacesContainer = document.getElementById("workspacesContainer");
+  var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
+  var rightArrow = document.getElementById("directionArrowWorkspaceRight");
+  var backButton = document.getElementById("backButton");
+  var showAllButton = document.getElementById("showAll");
+
+
+  if (workspaces.style.height == 'auto') {
+    workspaces.style.height = '150px';
+    workspaces.style.overflow = 'scroll';
+    workspaces.style.overflowY = 'hidden';
+    workspaces.style.whiteSpace = 'nowrap';
+    workspacesContainer.style.overflow = 'hidden';
+    workspacesContainer.style.marginBottom = "0px";
+    leftArrow.style.display = 'inline-block';
+    rightArrow.style.display = 'inline-block';
+    backButton.style.display = 'none';
+    showAllButton.style.display = 'inline';
+  } else {
+    workspaces.style.height = 'auto';
+    workspaces.style.overflow = 'visible';
+    workspaces.style.overflowY = 'visible';
+    workspaces.style.whiteSpace = 'normal';
+    workspacesContainer.style.overflow = 'visible';
+    workspaces.style.marginBottom = "80px";
+    leftArrow.style.display = 'none';
+    rightArrow.style.display = 'none';
+    backButton.style.display = 'inline';
+    showAllButton.style.display = 'none';
+  }
+}
+
+// Toggle All Workspace View
+document.getElementById("backButton").onclick = function() {
+  var workspaces = document.getElementById("workspaces");
+  var workspacesContainer = document.getElementById("workspacesContainer");
+  var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
+  var rightArrow = document.getElementById("directionArrowWorkspaceRight");
+  var backButton = document.getElementById("backButton");
+  var showAllButton = document.getElementById("showAll");
+
+  workspaces.style.height = '150px';
+  workspaces.style.overflow = 'scroll';
+  workspaces.style.overflowY = 'hidden';
+  workspaces.style.whiteSpace = 'nowrap';
+  workspacesContainer.style.overflow = 'hidden';
+  leftArrow.style.display = 'inline-block';
+  rightArrow.style.display = 'inline-block';
+  backButton.style.display = 'none';
+  showAllButton.style.display = 'inline';
+}
+
+// Toggle New Workspace Dialogue
+document.getElementById("addButton").onclick = function() {
+  var container = document.getElementById("sidebar");
+  var addButton = document.getElementById("addButton");
+
+  if (container.style.width == '300px') {
+    container.style.width = '0px';
+  } else {
+    container.style.width = '300px';
+  }
+}
+
+// Hide New Workspace Dialogue on X Click
+document.getElementById("closeSidebar").onclick = closeDialogue();
+
+// Hide New Workspace Dialogue On Mouse Click Elsewhere
+document.addEventListener('mouseup', function (e) {
+  var container = document.getElementById("sidebar");
+  var exitButton = document.getElementById("closeSidebar");
+
+  if (!container.contains(e.target) || e.target == exitButton) {
+    closeDialogue();
+  }
+}.bind(this));
+
+function closeDialogue() {
+  var container = document.getElementById("sidebar");
+  container.style.width = '0px';
+  addButton.style.display = 'inline';
+}
+
+
+
+
+addTab("regularTab");
 loadWorkspaces();

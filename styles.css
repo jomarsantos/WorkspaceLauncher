@@ -1,21 +1,224 @@
-body {
-  background-attachment: fixed;
-  background-position: center;    background-image: url("images/workspace.jpg");
-}
+/********************************
+MAIN
+********************************/
 
-header {
-  height: 40px;
-}
-
-@font-face {
-    font-family: "Avenir Next LT Medium";
-    src: url("AvenirNextLTPro-MediumCn.otf") format("opentype");
-}
+/*FONT*/
 
 @font-face {
     font-family: "Avenir Next LT Pro Demi";
     src: url("AvenirNextLTPro-Demi.otf") format("opentype");
 }
+
+/*GENERAL*/
+
+body {
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-image: url("images/workspace.jpg");
+
+  font-family: "Avenir Next LT Pro Demi";
+  color: #FFFFFF;
+}
+
+h4, h5, h6 {
+  letter-spacing: 1px;
+  margin: 0px;
+}
+
+h4 {
+  font-size: 28px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  font-size: 24px;
+}
+
+button {
+  font-family: "Avenir Next LT Pro Demi";
+  color: #FFFFFF;
+}
+
+button:focus {
+  outline: 0;
+}
+
+/********************************
+SIDEBAR - COMMON
+********************************/
+
+#sidebar {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #000000;
+  overflow-x: hidden;
+  padding-top: 60px;
+  color: #FFFFFF;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+#closeSidebar {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  margin: 0px;
+  font-size: 36px !important;
+  color: #FFFFFF;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+#closeSidebar:hover {
+  opacity: 1;
+}
+
+/********************************
+SIDEBAR - WORKSPACE
+********************************/
+
+#workspaceForm {
+  height: auto;
+  width: 250px;
+  padding: 25px;
+}
+
+#workspaceForm h4 {
+  text-align: center;
+}
+
+#workspaceForm h5 {
+  margin-top: 15px;
+}
+
+#workspaceForm h6 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#workspaceForm input {
+  margin-bottom: 5px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 2px solid #FFFFFF;
+  width: 220px;
+  font-family: "Avenir Next LT Pro Demi";
+  font-size: 12px;
+  color: #FFFFFF;
+}
+
+/*BUTTONS*/
+
+.removeTab {
+  background: transparent;
+  display: inline-block;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.removeTab:hover {
+  opacity: 1;
+}
+
+.addTabButton {
+  margin: 0px;
+  padding: 0px;
+  font-size: 10px;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.addTabButton:hover {
+  color: #FFFFFF;
+  opacity: 0.8;
+}
+
+#saveWorkspace {
+  left: 50%;
+  margin-left: -50px;
+  margin-top: 30px;
+  width: 100px;
+  font-size: 12px;
+  background-color: #000000;
+  border-radius: 0px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #FFFFFF;
+  cursor: pointer;
+  color: #FFFFFF;
+}
+
+#saveWorkspace:hover {
+  background-color: #0F1112;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .button {
   position: absolute;
@@ -45,8 +248,8 @@ header {
 }
 
 #addButton {
-  right: 40px;
-  top: -4px;
+  left: 215px;
+  top: -8px;
   padding: 0px;
   height: auto;
   width: auto;
@@ -62,9 +265,10 @@ header {
 }
 
 #showAll {
+  text-align: right;
   position: absolute;
   top: 6px;
-  right: 65px;
+  right: 35px;
   margin: 0px;
   padding: 0px;
   font-size: 14px;
@@ -79,33 +283,6 @@ header {
   outline: 0;
 }
 
-
-#newWorkspaceContainer {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #000000;
-  overflow-x: hidden;
-  transition: 0.3s;
-  padding-top: 60px;
-  color: #FFFFFF;
-  font-family: "Avenir Next LT Medium";
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-#closeDialogue {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  font-size: 36px !important;
-  color: #FFFFFF;
-  cursor: pointer;
-}
-
 #newWorkspaceForm {
   padding: 20px;
   color: #FFFFFF;
@@ -113,19 +290,6 @@ header {
   font-size: 14px;
 }
 
-#newWorkspaceTitle {
-  text-align: center;
-  font-size: 24px;
-  display: block;
-  width: 260px;
-}
-
-.newWorkspaceSubTitle {
-  font-size: 14px;
-  display: block;
-  width: 260px;
-  margin: 0px;
-}
 
 #newWorkspaceForm input {
   border: 0;
@@ -155,15 +319,6 @@ header {
   background-color: #0F1112;
 }
 
-.removeTabBtn {
-  background: transparent;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  color: #FFFFFF;
-  border: none;
-  cursor: pointer;
-}
 
 .addTabBtn {
   background-color: #0F0F0F;
@@ -230,10 +385,11 @@ header {
 }
 
 #backButton {
+  text-align: right;
   display: none;
   position: absolute;
   top: 7px;
-  right: 45px;
+  right: 35px;
   margin: 0px;
   padding: 0px;
   font-size: 14px;
