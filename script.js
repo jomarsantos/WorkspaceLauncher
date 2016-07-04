@@ -42,7 +42,8 @@ document.getElementById("saveWorkspace").onclick = function() {
   var workspaceTabs = [];
   var pinnedTabs = document.getElementsByClassName("pinnedTab");
   var regularTabs = document.getElementsByClassName("regularTab");
-  var tab, i, workspaceName, newWorkspace;
+  var workspacesDiv = document.getElementById("workspaces");
+  var tab, i, workspaceName, newWorkspace, workspace;
 
   for (i = 0; i < pinnedTabs.length; i++) {
     tab = {
@@ -73,19 +74,30 @@ document.getElementById("saveWorkspace").onclick = function() {
   chrome.storage.sync.set({workspaces: workspaces});
 
   showNewWorkspace(workspaceName);
-  closeDialogue();
-  resetForm();
+  // closeDialogue();
+  resetWorkspaceForm();
 }
+
+// Add New Workspace to View
+function showNewWorkspace(workspaceName) {
+  var workspacesDiv = document.getElementById("workspaces");
+  var firstWorkspace = document.getElementsByClassName("workspace")[0];
+  var workspace = createWorkspaceButton(workspaceName);
+  workspacesDiv.insertBefore(workspace, firstWorkspace);
+}
+
 
 // Load Workspaces on Startup
 function loadWorkspaces() {
+  var workspacesDiv = document.getElementById("workspaces");
   var i, clone, workspace;
 
   chrome.storage.sync.get({workspaces: []}, function(data) {
     workspaces = data.workspaces;
 
     for (i = 0; i < workspaces.length; i++) {
-      createWorkspaceButton(workspaces[i].name);
+      workspace = createWorkspaceButton(workspaces[i].name);
+      workspacesDiv.appendChild(workspace);
     }
   });
 }
@@ -100,51 +112,12 @@ function createWorkspaceButton(workspaceName) {
   workspace.onclick = function() {
     openWorkspace(workspaceName);
   }
-  
+
   workspace.id = workspaceName;
   workspaceNameText = workspaceName.toUpperCase();
   workspace.querySelector("h3").innerHTML = workspaceNameText;
-  workspacesDiv.appendChild(workspace);
+  return workspace;
 }
-
-// Add New Workspace to View
-function showNewWorkspace(workspaceName) {
-  var workspacesDiv = document.getElementById("workspaces");
-  var firstWorkspace = document.getElementsByClassName("workspace")[0];
-  var workspace = createWorkspaceButton(workspaceName);
-  workspacesDiv.insertBefore(workspace, firstWorkspace);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Open Workspace Clicked
 function openWorkspace(workspaceName) {
@@ -153,7 +126,6 @@ function openWorkspace(workspaceName) {
   var workspace = {};
 
   workspace = getWorkspace(workspaceName);
-  console.log(workspace);
   tabs = workspace.tabs;
 
   for (i = 0; i < tabs.length; i++) {
@@ -161,7 +133,7 @@ function openWorkspace(workspaceName) {
   }
 }
 
-// Returns workspace of given name
+// Returns Workspace of Given Name
 function getWorkspace(workspaceName) {
   for (i = 0; i < workspaces.length; i++) {
     if (workspaces[i].name == workspaceName) {
@@ -170,17 +142,52 @@ function getWorkspace(workspaceName) {
   }
 }
 
-function resetForm() {
+// Resets Workspace Form to Default View
+function resetWorkspaceForm() {
   numRegularTabs = 0;
   numPinnedTabs = 0;
   var tabs = document.getElementsByClassName('tab');
   while(tabs[0]) {
     tabs[0].parentNode.removeChild(tabs[0]);
   }
-  addTab(false, "regularTab", numRegularTabs++);
+  addTab("regularTab");
   var nameInput = document.getElementById('workspaceName');
   nameInput.value = "";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
