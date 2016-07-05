@@ -57,6 +57,7 @@ SIDEBAR - COMMON
 ********************************/
 
 #sidebar {
+  display: none;
   height: 100%;
   width: 300px;
   position: fixed;

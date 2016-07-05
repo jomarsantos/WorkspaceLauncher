@@ -6,13 +6,11 @@
   </head>
   <body>
 
-
-
-
     <div id="main">
       <div class="indexContainer" id="workspacesContainer">
         <div id="workspacesHeader">
           <h1 class="mainTitle" id="workspacesTitle">WORKSPACES</h1>
+          <button id="addWorkspaceButton">+</button>
         </div> <!-- workspacesHeader -->
         <div id="workspaces">
           <template id="workspaceTemplate">
@@ -20,7 +18,7 @@
               <button class="removeTab">
                 <h3 class="workspaceName"></h3>
               </button>
-            </div>
+            </div> <!-- workspace -->
           </template>
         </div> <!-- workspaces -->
       </div> <!-- workspacesContainer -->
@@ -32,28 +30,6 @@
         </div> <!-- favorites -->
       </div> <!-- favoritesContainer -->
     </div> <!-- main -->
-
-
-    <!-- <div id="workspacesContainer">
-      <div id="containerHeader">
-        <h1 class="mainTitle" id="workspacesTitle">WORKSPACES</h1>
-
-        <button type="button" class="button" id="addButton">&#43;</button>
-        <button type="button" class="mainTitle" id="showAll">SHOW ALL</button>
-
-        <button class="mainTitle" id="backButton">BACK</h1>
-      </div>
-      <br />
-      <button class="directionArrow" id="directionArrowWorkspaceLeft"><</button>
-      <div id="workspaces">
-      </div>
-      <button class="directionArrow" id="directionArrowWorkspaceRight">></button>
-    </div> -->
-
-
-
-
-
 
     <div id="sidebar">
       <a id="closeSidebar">&times;</a>
@@ -80,7 +56,7 @@
           <div class="tab">
             <input type="text" name="tab" value="http://">
             <button class="removeTab">&times;</button>
-          </div>
+          </div> <!-- tab -->
         </template>
 
         <div id="nameContainer">
@@ -90,7 +66,7 @@
 
         <button class="button" id="saveWorkspace" type="submit">SAVE</button>
       </div> <!-- workspaceForm -->
-    </div> <!-- newWorkspaceContainer -->
+    </div> <!-- sidebar -->
 
     <script src="jquery.min.js" type="text/javascript"></script>
     <script src="script.js" type="text/javascript"></script>

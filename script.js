@@ -3,6 +3,28 @@ var numRegularTabs = 0;
 var workspaces = [];
 
 /////////////////////////
+// COMMON
+/////////////////////////
+
+// Hide New Workspace Dialogue On Mouse Click Elsewhere
+document.addEventListener('mouseup', function (e) {
+  var sidebar = document.getElementById("sidebar");
+  var exitButton = document.getElementById("closeSidebar");
+  var addButton = document.getElementById("addWorkspaceButton")
+  if (( !sidebar.contains(e.target) || e.target == exitButton) &&
+      e.target != addButton) {
+    if (getComputedStyle(sidebar).display == "block") {
+      toggleSidebar();
+    }
+  }
+}.bind(this));
+
+// Toggle Sidebar
+function toggleSidebar() {
+  $("#sidebar").animate({width:'toggle'},350);
+}
+
+/////////////////////////
 // TAB ENTRY
 /////////////////////////
 
@@ -74,7 +96,7 @@ document.getElementById("saveWorkspace").onclick = function() {
   chrome.storage.sync.set({workspaces: workspaces});
 
   showNewWorkspace(workspaceName);
-  // closeDialogue();
+  toggleSidebar();
   resetWorkspaceForm();
 }
 
@@ -155,6 +177,23 @@ function resetWorkspaceForm() {
   nameInput.value = "";
 }
 
+// Handle Clicking of Add Workspace Button
+document.getElementById("addWorkspaceButton").onclick = function() {
+  // TODO: ensure workspace form is in sidebar
+  toggleSidebar();
+}
+
+
+
+
+
+
+/////////////////////////
+// INITIALIZE
+/////////////////////////
+
+addTab("regularTab");
+loadWorkspaces();
 
 
 
@@ -285,17 +324,6 @@ function resetWorkspaceForm() {
 //   showAllButton.style.display = 'inline';
 // }
 //
-// // Toggle New Workspace Dialogue
-// document.getElementById("addButton").onclick = function() {
-//   var container = document.getElementById("sidebar");
-//   var addButton = document.getElementById("addButton");
-//
-//   if (container.style.width == '300px') {
-//     container.style.width = '0px';
-//   } else {
-//     container.style.width = '300px';
-//   }
-// }
 
 // // Hide New Workspace Dialogue on X Click
 // document.getElementById("closeSidebar").onclick = closeDialogue();
@@ -315,9 +343,3 @@ function resetWorkspaceForm() {
 //   container.style.width = '0px';
 //   addButton.style.display = 'inline';
 // }
-
-
-
-
-addTab("regularTab");
-loadWorkspaces();
