@@ -128,7 +128,7 @@ function loadWorkspaces() {
 function createWorkspaceButton(workspaceName) {
   var workspacesDiv = document.getElementById("workspaces");
   var workspaceTemplate = document.querySelector("#workspaceTemplate");
-  var workspace = document.importNode(workspaceTemplate.content, true).querySelector("div");
+  var workspace = document.importNode(workspaceTemplate.content, true).querySelector("button");
   var workspaceNameText;
 
   workspace.onclick = function() {
@@ -182,11 +182,6 @@ document.getElementById("addWorkspaceButton").onclick = function() {
   // TODO: ensure workspace form is in sidebar
   toggleSidebar();
 }
-
-
-
-
-
 
 /////////////////////////
 // INITIALIZE
@@ -322,24 +317,4 @@ loadWorkspaces();
 //   rightArrow.style.display = 'inline-block';
 //   backButton.style.display = 'none';
 //   showAllButton.style.display = 'inline';
-// }
-//
-
-// // Hide New Workspace Dialogue on X Click
-// document.getElementById("closeSidebar").onclick = closeDialogue();
-//
-// // Hide New Workspace Dialogue On Mouse Click Elsewhere
-// document.addEventListener('mouseup', function (e) {
-//   var container = document.getElementById("sidebar");
-//   var exitButton = document.getElementById("closeSidebar");
-//
-//   if (!container.contains(e.target) || e.target == exitButton) {
-//     closeDialogue();
-//   }
-// }.bind(this));
-
-// function closeDialogue() {
-//   var container = document.getElementById("sidebar");
-//   container.style.width = '0px';
-//   addButton.style.display = 'inline';
 // }

@@ -186,12 +186,10 @@ VIEW - COMMON
   margin-left: -320px;
   height: 420px;
   width: 640px;
-  background-color: blue;
 }
 
 .indexContainer {
   width: 640px;
-  background-color: orange;
 }
 
 @media screen and (max-width: 768px) {
@@ -220,6 +218,23 @@ VIEW - COMMON
   }
 }
 
+.headerButton {
+  display: inline-block;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0px;
+  margin: 0px 5px 0px 15px;
+  top: 15px;
+  cursor: pointer;
+  opacity: 0.8;
+  float: right;
+}
+
+.headerButton:hover {
+  opacity: 1;
+}
+
 /********************************
 VIEW - WORKSPACE
 ********************************/
@@ -227,12 +242,69 @@ VIEW - WORKSPACE
 #workspacesContainer {
   height: 210px;
   margin-bottom: 20px;
+  overflow: hidden;
 }
 
 #workspacesHeader {
   height: 40px;
   margin-bottom: 10px;
-  background-color: green;
+}
+
+#workspacesHeader h1 {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+#workspaces {
+  padding-bottom: 30px;
+  overflow:scroll;
+  overflow-y: hidden;
+  white-space:nowrap;
+}
+
+.workspace {
+  padding: 0px;
+  margin-left: 5px;
+  margin-right: 5px;
+  position: relative;
+  height: 150px;
+  width: 150px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+}
+
+.workspace:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.workspaceArrows {
+  position: absolute;
+  top: 110px;
+  background: transparent;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.workspaceArrows:hover {
+  opacity: 0.8;
+}
+
+#workspaceArrowLeft {
+  left: -30px;
+}
+
+#workspaceArrowRight {
+  right: -30px;
 }
 
 /********************************
@@ -247,7 +319,11 @@ VIEW - FAVORITES
 #favoritesHeader {
   height: 40px;
   margin-bottom: 10px;
-  background-color: green;
+}
+
+#favoritesHeader h1 {
+  display: inline-block;
+  margin-left: 5px;
 }
 
 

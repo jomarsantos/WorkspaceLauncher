@@ -9,22 +9,26 @@
     <div id="main">
       <div class="indexContainer" id="workspacesContainer">
         <div id="workspacesHeader">
-          <h1 class="mainTitle" id="workspacesTitle">WORKSPACES</h1>
-          <button id="addWorkspaceButton">+</button>
+          <h1 class="mainTitle">WORKSPACES</h1>
+          <button class="headerButton" id="showAllWorkspaces">SHOW ALL</button>
+          <button class="headerButton" id="addWorkspaceButton">+ NEW</button>
         </div> <!-- workspacesHeader -->
         <div id="workspaces">
           <template id="workspaceTemplate">
-            <div class="workspace">
-              <button class="removeTab">
+              <button class="workspace">
                 <h3 class="workspaceName"></h3>
               </button>
-            </div> <!-- workspace -->
           </template>
         </div> <!-- workspaces -->
+        <button class="workspaceArrows" id="workspaceArrowLeft"><</button>
+        <button class="workspaceArrows" id="workspaceArrowRight">></button>
       </div> <!-- workspacesContainer -->
 
       <div class="indexContainer" id="favoritesContainer">
         <div id="favoritesHeader">
+          <h1 class="mainTitle">FAVORITES</h1>
+          <button class="headerButton" id="showAllFavorites">SHOW ALL</button>
+          <button class="headerButton" id="addFavoriteButton">+ NEW</button>
         </div> <!-- favoritesHeader -->
         <div id="favorites">
         </div> <!-- favorites -->
