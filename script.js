@@ -98,6 +98,7 @@ document.getElementById("saveWorkspace").onclick = function() {
   showNewWorkspace(workspaceName);
   toggleSidebar();
   resetWorkspaceForm();
+  $('#workspaces').animate({scrollLeft: 0}, 400);
 }
 
 // Add New Workspace to View
@@ -243,10 +244,24 @@ loadWorkspaces();
 
 
 
+$("#workspaceArrowLeft").click(function(){
+  var workspacesContainer = document.getElementById("workspaces");
+  if (workspacesContainer.scrollLeft > 0) {
+    var diff = workspacesContainer.scrollLeft % 160;
+    $('#workspaces').animate({scrollLeft: workspacesContainer.scrollLeft - diff - 480}, 400);
+    return false;
+  }
+});
 
-
-
-
+$("#workspaceArrowRight").click(function(){
+  var workspacesContainer = document.getElementById("workspaces");
+  if (workspacesContainer.scrollLeft < (workspaces.length - 4) * 160) {
+    var diff = workspacesContainer.scrollLeft % 160;
+    var workspacesContainer = document.getElementById("workspaces");
+    $('#workspaces').animate({scrollLeft: workspacesContainer.scrollLeft - diff + 640}, 400);
+    return false;
+  }
+});
 
 
 // // Left Scroll
