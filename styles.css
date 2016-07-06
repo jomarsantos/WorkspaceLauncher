@@ -254,10 +254,10 @@ VIEW - WORKSPACE
 #workspaces {
   overflow-x: scroll;
   overflow-y: hidden;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   height: 80%;
   padding: 0px 0px 200px 0px;
-  list-style-type: none;
+  width: auto;
 }
 
 #workspaces li {

@@ -1,6 +1,6 @@
 var numPinnedTabs = 0;
 var numRegularTabs = 0;
-var workspaces = [];
+var workspaces = {};
 
 /////////////////////////
 // COMMON
@@ -73,10 +73,11 @@ document.getElementById("saveWorkspace").onclick = function() {
   var workspacesDiv = document.getElementById("workspaces");
   var errorMsg = document.getElementById("workspaceError");
   var successMsg = document.getElementById("workspaceSuccess");
-  var tab, i, workspaceName, newWorkspace, workspace;
+  var tab, i, workspaceName, id, newWorkspace, workspace;
 
   errorMsg.innerHTML = "";
   workspaceName = document.getElementById("workspaceName").value;
+  id = workspaceName.replace(/\s+/g, '-').toLowerCase();
 
   for (i = 0; i < pinnedTabs.length; i++) {
     tab = {
@@ -105,9 +106,9 @@ document.getElementById("saveWorkspace").onclick = function() {
     errorMsg.innerHTML = "Oops! You forgot to name your workspace.<br>Be creative!";
     return;
   }
-  workspaces.unshift(newWorkspace);
+  workspaces[id] = newWorkspace;
   chrome.storage.sync.set({workspaces: workspaces});
-  showNewWorkspace(workspaceName);
+  showNewWorkspace(workspaceName, id);
 
   successMsg = document.getElementById("workspaceSuccess");
   successMsg.innerHTML = "Workspace created!";
@@ -122,10 +123,10 @@ function success(workspaceName) {
 
 
 // Add New Workspace to View
-function showNewWorkspace(workspaceName) {
+function showNewWorkspace(workspaceName, id) {
   var workspacesDiv = document.getElementById("workspaces");
-  var firstWorkspace = document.getElementsByClassName("workspace")[0];
-  var workspace = createWorkspaceButton(workspaceName);
+  var firstWorkspace = document.getElementsByClassName("workspaceItem")[0];
+  var workspace = createWorkspaceButton(workspaceName, id);
   workspacesDiv.insertBefore(workspace, firstWorkspace);
 }
 
@@ -133,42 +134,43 @@ function showNewWorkspace(workspaceName) {
 // Load Workspaces on Startup
 function loadWorkspaces() {
   var workspacesDiv = document.getElementById("workspaces");
-  var i, clone, workspace;
+  var i, clone, workspaceName, workspace, id;
 
-  chrome.storage.sync.get({workspaces: []}, function(data) {
+  chrome.storage.sync.get({workspaces: {}}, function(data) {
     workspaces = data.workspaces;
 
-    for (i = 0; i < workspaces.length; i++) {
-      workspace = createWorkspaceButton(workspaces[i].name);
+    for (var workspace in workspaces) {
+      workspaceName = workspaces[workspace].name;
+      id = workspaceName.replace(/\s+/g, '-').toLowerCase();
+      workspace = createWorkspaceButton(workspaceName, id);
       workspacesDiv.appendChild(workspace);
     }
   });
 }
 
 // Returns the Button of a Workspace
-function createWorkspaceButton(workspaceName) {
+function createWorkspaceButton(workspaceName, id) {
   var workspacesDiv = document.getElementById("workspaces");
   var workspaceTemplate = document.querySelector("#workspaceTemplate");
   var workspace = document.importNode(workspaceTemplate.content, true).querySelector("li");
   var workspaceNameText;
 
   workspace.onclick = function() {
-    openWorkspace(workspaceName);
+    openWorkspace(workspaceName, id);
   }
 
-  workspace.id = str = workspaceName.replace(/\s+/g, '-').toLowerCase();
   workspaceNameText = workspaceName.toUpperCase();
   workspace.querySelector("p").innerHTML = workspaceNameText;
   return workspace;
 }
 
 // Open Workspace Clicked
-function openWorkspace(workspaceName) {
+function openWorkspace(workspaceName, id) {
   var i;
   var tabs = [];
   var workspace = {};
 
-  workspace = getWorkspace(workspaceName);
+  workspace = getWorkspace(id);
   tabs = workspace.tabs;
 
   for (i = 0; i < tabs.length; i++) {
@@ -177,12 +179,8 @@ function openWorkspace(workspaceName) {
 }
 
 // Returns Workspace of Given Name
-function getWorkspace(workspaceName) {
-  for (i = 0; i < workspaces.length; i++) {
-    if (workspaces[i].name == workspaceName) {
-      return workspaces[i];
-    }
-  }
+function getWorkspace(id) {
+  return workspaces[id];
 }
 
 // Resets Workspace Form to Default View
