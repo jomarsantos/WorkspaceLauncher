@@ -5,6 +5,10 @@ var workspaces = [];
 /////////////////////////
 // COMMON
 /////////////////////////
+$("#workspaces").sortable({
+    handle: 'button',
+    cancel: ''
+}).disableSelection();
 
 // Hide New Workspace Dialogue On Mouse Click Elsewhere
 document.addEventListener('mouseup', function (e) {
@@ -145,7 +149,7 @@ function loadWorkspaces() {
 function createWorkspaceButton(workspaceName) {
   var workspacesDiv = document.getElementById("workspaces");
   var workspaceTemplate = document.querySelector("#workspaceTemplate");
-  var workspace = document.importNode(workspaceTemplate.content, true).querySelector("button");
+  var workspace = document.importNode(workspaceTemplate.content, true).querySelector("li");
   var workspaceNameText;
 
   workspace.onclick = function() {

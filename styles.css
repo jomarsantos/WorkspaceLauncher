@@ -256,7 +256,15 @@ VIEW - WORKSPACE
   overflow-y: hidden;
   white-space: nowrap;
   height: 80%;
-  padding-bottom: 200px;
+  padding: 0px 0px 200px 0px;
+  list-style-type: none;
+}
+
+#workspaces li {
+  display: inline-block;
+  float: left;
+  margin: 0px;
+  padding: 0px;
 }
 
 .workspace {
@@ -264,7 +272,7 @@ VIEW - WORKSPACE
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 10px;
-  position: relative;
+  position: static;
   height: 150px;
   width: 150px;
   text-align: center;

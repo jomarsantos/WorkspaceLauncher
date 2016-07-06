@@ -14,13 +14,15 @@
           <button class="headerButton" id="workspacesBackButton">BACK</button>
           <button class="headerButton" id="addWorkspaceButton">+ NEW</button>
         </div> <!-- workspacesHeader -->
-        <div id="workspaces">
-          <template id="workspaceTemplate">
-              <button class="workspace">
-                <p class="workspaceName"></p>
-              </button>
-          </template>
-        </div> <!-- workspaces -->
+        <ul id="workspaces">
+        </ul> <!-- workspaces -->
+
+        <template id="workspaceTemplate">
+          <li><button class="workspace">
+            <p class="workspaceName"></p>
+          </button></li>
+        </template>
+
         <button class="workspaceArrows" id="workspaceArrowLeft"><</button>
         <button class="workspaceArrows" id="workspaceArrowRight">></button>
       </div> <!-- workspacesContainer -->
@@ -75,7 +77,11 @@
       </div> <!-- workspaceForm -->
     </div> <!-- sidebar -->
 
+
+
+
     <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="jquery-ui.js" type="text/javascript"></script>
     <script src="script.js" type="text/javascript"></script>
   </body>
 </html>
