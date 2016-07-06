@@ -255,6 +255,7 @@ document.getElementById("workspacesBackButton").onclick = function() {
   workspaces.style.width = "auto";
   workspaces.style.overflowX = "scroll";
   workspaces.style.overflowY = "hidden";
+  $('#workspaces').animate({scrollTop: 0}, 300);
   workspacesContainer.animate({
     height: "210px"}, 1000);
   $("#workspacesBackButton").hide(200);
