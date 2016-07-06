@@ -310,20 +310,20 @@ VIEW - WORKSPACE
 }
 
 /********************************
-VIEW - FAVORITES
+VIEW - WEBSITES
 ********************************/
 
-#favoritesContainer {
+#websitesContainer {
   height: 110px;
   margin-bottom: 20px;
 }
 
-#favoritesHeader {
+#websitesHeader {
   height: 40px;
   margin-bottom: 10px;
 }
 
-#favoritesHeader h1 {
+#websitesHeader h1 {
   display: inline-block;
   margin-left: 5px;
 }

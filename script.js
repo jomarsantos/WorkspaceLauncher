@@ -216,6 +216,54 @@ $("#workspaceArrowRight").click(function(){
   }
 });
 
+// Hide Websites View
+function hideWebsitesView() {
+  var websitesContainer = $("#websitesContainer");
+  websitesContainer.fadeOut(400);
+}
+
+// Show Websites View
+function showWebsitesView() {
+  var websitesContainer = $("#websitesContainer");
+  websitesContainer.fadeIn(400);
+}
+
+// Show All Workspace View
+document.getElementById("showAllWorkspaces").onclick = function() {
+  var workspaces = document.getElementById("workspaces");
+  workspaces.style.height = "auto";
+  workspaces.style.whiteSpace = "normal";
+  hideWebsitesView();
+  $("#workspacesContainer").animate({
+    height: workspaces.offsetHeight}, 1000);
+  $("#showAllWorkspaces").hide();
+  $("#workspacesBackButton").show();
+  $("#workspaceArrowLeft").fadeOut();
+  $("#workspaceArrowRight").fadeOut();
+}
+
+// Hide All Workspace View
+document.getElementById("workspacesBackButton").onclick = function() {
+  var workspacesContainer = $("#workspacesContainer")
+  var main = document.getElementById("main");
+
+  workspacesContainer.animate({height: 210}, 1000);
+  $("#workspacesBackButton").hide(200);
+  $("#showAllWorkspaces").show(200);
+  $("#workspaceArrowLeft").fadeIn();
+  $("#workspaceArrowRight").fadeIn();
+  setTimeout(showWebsitesView, 1000);
+  setTimeout(setDefaultWorkspaceDiv, 1000);
+}
+
+// Helper for Correct Timing of Back Button
+function setDefaultWorkspaceDiv() {
+  var workspaces = document.getElementById("workspaces");
+
+  workspaces.style.height = "auto";
+  workspaces.style.whiteSpace = "nowrap";
+}
+
 /////////////////////////
 // INITIALIZE
 /////////////////////////
@@ -260,55 +308,6 @@ loadWorkspaces();
 
 
 
-
-// Hide Favorites View
-function hideFavoritesView() {
-  var favoritesContainer = $("#favoritesContainer");
-  favoritesContainer.fadeOut(200);
-}
-
-// Show Favorites View
-function showFavoritesView() {
-  var favoritesContainer = $("#favoritesContainer");
-  favoritesContainer.fadeIn(200);
-}
-
-// Show All Workspace View
-document.getElementById("showAllWorkspaces").onclick = function() {
-  var workspaces = document.getElementById("workspaces");
-  workspaces.style.height = "auto";
-  workspaces.style.whiteSpace = "normal";
-  hideFavoritesView();
-  $("#workspacesContainer").animate({
-    height: workspaces.offsetHeight}, 1000);
-  $("#showAllWorkspaces").hide();
-  $("#workspacesBackButton").show();
-  $("#workspaceArrowLeft").fadeOut();
-  $("#workspaceArrowRight").fadeOut();
-
-}
-
-// Hide All Workspace View
-document.getElementById("workspacesBackButton").onclick = function() {
-  var workspacesContainer = $("#workspacesContainer")
-  var main = document.getElementById("main");
-
-  workspacesContainer.animate({height: 210}, 1000);
-  $("#workspacesBackButton").hide(200);
-  $("#showAllWorkspaces").show(200);
-  $("#workspaceArrowLeft").fadeIn();
-  $("#workspaceArrowRight").fadeIn();
-  setTimeout(showFavoritesView, 1000);
-  setTimeout(setDefaultWorkspaceDiv, 1000);
-}
-
-// Helper for Correct Timing of Back Button
-function setDefaultWorkspaceDiv() {
-  var workspaces = document.getElementById("workspaces");
-
-  workspaces.style.height = "auto";
-  workspaces.style.whiteSpace = "nowrap";
-}
 
 
 
