@@ -180,9 +180,8 @@ VIEW - COMMON
 
 #main {
   position: absolute;
-  top: 50%;
+  top: 10%;
   left: 50%;
-  margin-top: -210px;
   margin-left: -320px;
   height: 420px;
   width: 640px;
@@ -194,9 +193,7 @@ VIEW - COMMON
 
 @media screen and (max-width: 768px) {
   #main {
-    margin-top: -110px;
     margin-left: -240px;
-    height: 320px;
     width: 480px;
   }
 
@@ -207,9 +204,7 @@ VIEW - COMMON
 
 @media screen and (max-width: 600px) {
   #main {
-    margin-top: -110px;
     margin-left: -160px;
-    height: 220px;
     width: 320px;
   }
 
