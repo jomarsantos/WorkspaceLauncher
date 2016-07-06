@@ -183,7 +183,8 @@ VIEW - COMMON
   top: 10%;
   left: 50%;
   margin-left: -320px;
-  height: 420px;
+  margin-bottom: 100px;
+  height: auto;
   width: 640px;
 }
 
@@ -253,14 +254,16 @@ VIEW - WORKSPACE
 #workspaces {
   padding-bottom: 30px;
   overflow:scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
-  white-space:nowrap;
+  white-space: nowrap;;
 }
 
 .workspace {
   padding: 0px;
   margin-left: 5px;
   margin-right: 5px;
+  margin-bottom: 10px;
   position: relative;
   height: 150px;
   width: 150px;
@@ -300,6 +303,10 @@ VIEW - WORKSPACE
 
 #workspaceArrowRight {
   right: -30px;
+}
+
+#workspacesBackButton {
+  display: none;
 }
 
 /********************************

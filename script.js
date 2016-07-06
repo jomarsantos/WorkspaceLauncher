@@ -261,54 +261,90 @@ loadWorkspaces();
 
 
 
+// Hide Favorites View
+function hideFavoritesView() {
+  var favoritesContainer = $("#favoritesContainer");
+  favoritesContainer.fadeOut(200);
+}
+
+// Show Favorites View
+function showFavoritesView() {
+  var favoritesContainer = $("#favoritesContainer");
+  favoritesContainer.fadeIn(200);
+}
+
+// Show All Workspace View
+document.getElementById("showAllWorkspaces").onclick = function() {
+  var workspaces = document.getElementById("workspaces");
+  workspaces.style.height = "auto";
+  workspaces.style.whiteSpace = "normal";
+  hideFavoritesView();
+  $("#workspacesContainer").animate({
+    height: workspaces.offsetHeight}, 1000);
+  $("#showAllWorkspaces").hide();
+  $("#workspacesBackButton").show();
+  $("#workspaceArrowLeft").fadeOut();
+  $("#workspaceArrowRight").fadeOut();
+
+}
+
+// Hide All Workspace View
+document.getElementById("workspacesBackButton").onclick = function() {
+  var workspacesContainer = $("#workspacesContainer")
+  var main = document.getElementById("main");
+
+  workspacesContainer.animate({height: 210}, 1000);
+  $("#workspacesBackButton").hide(200);
+  $("#showAllWorkspaces").show(200);
+  $("#workspaceArrowLeft").fadeIn();
+  $("#workspaceArrowRight").fadeIn();
+  setTimeout(showFavoritesView, 1000);
+  setTimeout(setDefaultWorkspaceDiv, 1000);
+}
+
+// Helper for Correct Timing of Back Button
+function setDefaultWorkspaceDiv() {
+  var workspaces = document.getElementById("workspaces");
+
+  workspaces.style.height = "auto";
+  workspaces.style.whiteSpace = "nowrap";
+}
 
 
 
 
+  // var workspaces = document.getElementById("workspaces");
+  // var workspacesContainer = document.getElementById("workspacesContainer");
+  // var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
+  // var rightArrow = document.getElementById("directionArrowWorkspaceRight");
+  // var backButton = document.getElementById("backButton");
+  // var showAllButton = document.getElementById("showAll");
+  //
+  //
+  // if (workspaces.style.height == 'auto') {
+  //   workspaces.style.height = '150px';
+  //   workspaces.style.overflow = 'scroll';
+  //   workspaces.style.overflowY = 'hidden';
+  //   workspaces.style.whiteSpace = 'nowrap';
+  //   workspacesContainer.style.overflow = 'hidden';
+  //   workspacesContainer.style.marginBottom = "0px";
+  //   leftArrow.style.display = 'inline-block';
+  //   rightArrow.style.display = 'inline-block';
+  //   backButton.style.display = 'none';
+  //   showAllButton.style.display = 'inline';
+  // } else {
+  //   workspaces.style.height = 'auto';
+  //   workspaces.style.overflow = 'visible';
+  //   workspaces.style.overflowY = 'visible';
+  //   workspaces.style.whiteSpace = 'normal';
+  //   workspacesContainer.style.overflow = 'visible';
+  //   workspaces.style.marginBottom = "80px";
+  //   leftArrow.style.display = 'none';
+  //   rightArrow.style.display = 'none';
+  //   backButton.style.display = 'inline';
+  //   showAllButton.style.display = 'none';
+  // }
 
-
-
-
-
-
-
-
-
-
-// // Toggle All Workspace View
-// document.getElementById("showAll").onclick = function() {
-//   var workspaces = document.getElementById("workspaces");
-//   var workspacesContainer = document.getElementById("workspacesContainer");
-//   var leftArrow = document.getElementById("directionArrowWorkspaceLeft");
-//   var rightArrow = document.getElementById("directionArrowWorkspaceRight");
-//   var backButton = document.getElementById("backButton");
-//   var showAllButton = document.getElementById("showAll");
-//
-//
-//   if (workspaces.style.height == 'auto') {
-//     workspaces.style.height = '150px';
-//     workspaces.style.overflow = 'scroll';
-//     workspaces.style.overflowY = 'hidden';
-//     workspaces.style.whiteSpace = 'nowrap';
-//     workspacesContainer.style.overflow = 'hidden';
-//     workspacesContainer.style.marginBottom = "0px";
-//     leftArrow.style.display = 'inline-block';
-//     rightArrow.style.display = 'inline-block';
-//     backButton.style.display = 'none';
-//     showAllButton.style.display = 'inline';
-//   } else {
-//     workspaces.style.height = 'auto';
-//     workspaces.style.overflow = 'visible';
-//     workspaces.style.overflowY = 'visible';
-//     workspaces.style.whiteSpace = 'normal';
-//     workspacesContainer.style.overflow = 'visible';
-//     workspaces.style.marginBottom = "80px";
-//     leftArrow.style.display = 'none';
-//     rightArrow.style.display = 'none';
-//     backButton.style.display = 'inline';
-//     showAllButton.style.display = 'none';
-//   }
-// }
 //
 // // Toggle All Workspace View
 // document.getElementById("backButton").onclick = function() {
