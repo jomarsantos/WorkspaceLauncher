@@ -319,6 +319,18 @@ VIEW - WORKSPACE
   white-space: normal;
 }
 
+#workspaceError {
+  color: #ff4d4d;
+  text-align: center;
+  font-size: 12px;
+}
+
+#workspaceSuccess {
+  color: #66cc66;
+  text-align: center;
+  font-size: 12px;
+}
+
 /********************************
 VIEW - WEBSITES
 ********************************/

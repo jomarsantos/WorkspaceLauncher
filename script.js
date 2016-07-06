@@ -10,9 +10,11 @@ var workspaces = [];
 document.addEventListener('mouseup', function (e) {
   var sidebar = document.getElementById("sidebar");
   var exitButton = document.getElementById("closeSidebar");
-  var addButton = document.getElementById("addWorkspaceButton")
+  var addButton = document.getElementById("addWorkspaceButton");
+  var backButton = document.getElementById("workspacesBackButton");
+  var showAllButton = document.getElementById("showAllWorkspaces");
   if (( !sidebar.contains(e.target) || e.target == exitButton) &&
-      e.target != addButton) {
+      (e.target != addButton && e.target != backButton && e.target != showAllButton)) {
     if (getComputedStyle(sidebar).display == "block") {
       toggleSidebar();
     }
@@ -65,7 +67,12 @@ document.getElementById("saveWorkspace").onclick = function() {
   var pinnedTabs = document.getElementsByClassName("pinnedTab");
   var regularTabs = document.getElementsByClassName("regularTab");
   var workspacesDiv = document.getElementById("workspaces");
+  var errorMsg = document.getElementById("workspaceError");
+  var successMsg = document.getElementById("workspaceSuccess");
   var tab, i, workspaceName, newWorkspace, workspace;
+
+  errorMsg.innerHTML = "";
+  workspaceName = document.getElementById("workspaceName").value;
 
   for (i = 0; i < pinnedTabs.length; i++) {
     tab = {
@@ -85,21 +92,30 @@ document.getElementById("saveWorkspace").onclick = function() {
     workspaceTabs.push(tab);
   }
 
-  workspaceName = document.getElementById("workspaceName").value;
-
   newWorkspace = {
     name: workspaceName,
     tabs: workspaceTabs
   }
 
+  if (workspaceName == "") {
+    errorMsg.innerHTML = "Oops! You forgot to name your workspace.<br>Be creative!";
+    return;
+  }
   workspaces.unshift(newWorkspace);
   chrome.storage.sync.set({workspaces: workspaces});
-
   showNewWorkspace(workspaceName);
+
+  successMsg = document.getElementById("workspaceSuccess");
+  successMsg.innerHTML = "Workspace created!";
+  setTimeout(success, 1700);
+}
+
+// Delay for Successful Creation
+function success(workspaceName) {
   toggleSidebar();
   resetWorkspaceForm();
-  $('#workspaces').animate({scrollLeft: 0}, 400);
 }
+
 
 // Add New Workspace to View
 function showNewWorkspace(workspaceName) {
@@ -167,12 +183,18 @@ function getWorkspace(workspaceName) {
 
 // Resets Workspace Form to Default View
 function resetWorkspaceForm() {
+  var errorMsg = document.getElementById("workspaceError");
+  var successMsg = document.getElementById("workspaceSuccess");
+  var tabs = document.getElementsByClassName('tab');
+
   numRegularTabs = 0;
   numPinnedTabs = 0;
-  var tabs = document.getElementsByClassName('tab');
+
   while(tabs[0]) {
     tabs[0].parentNode.removeChild(tabs[0]);
   }
+  errorMsg.innerHTML = "";
+  successMsg.innerHTML = "";
   addTab("regularTab");
   var nameInput = document.getElementById('workspaceName');
   nameInput.value = "";
