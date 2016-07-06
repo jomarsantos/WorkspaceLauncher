@@ -19,6 +19,7 @@ body {
 
   font-family: "Avenir Next LT Pro Demi";
   color: #FFFFFF;
+  overflow-y: hidden;
 }
 
 h1, h4, h5, h6 {
@@ -183,8 +184,7 @@ VIEW - COMMON
   top: 10%;
   left: 50%;
   margin-left: -320px;
-  margin-bottom: 100px;
-  height: auto;
+  height: 90%;
   width: 640px;
 }
 
@@ -252,11 +252,11 @@ VIEW - WORKSPACE
 }
 
 #workspaces {
-  padding-bottom: 30px;
-  overflow:scroll;
-  overflow-x: hidden;
+  overflow-x: scroll;
   overflow-y: hidden;
-  white-space: nowrap;;
+  white-space: nowrap;
+  height: 80%;
+  padding-bottom: 200px;
 }
 
 .workspace {
@@ -307,6 +307,16 @@ VIEW - WORKSPACE
 
 #workspacesBackButton {
   display: none;
+}
+
+.workspaceName {
+  margin: 0px;
+  text-align: center;
+  width: 130px;
+  height: 50px;
+  padding: 0px 10px 0px 10px;
+  word-wrap: break-word;;
+  white-space: normal;
 }
 
 /********************************

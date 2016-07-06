@@ -136,9 +136,9 @@ function createWorkspaceButton(workspaceName) {
     openWorkspace(workspaceName);
   }
 
-  workspace.id = workspaceName;
+  workspace.id = str = workspaceName.replace(/\s+/g, '-').toLowerCase();
   workspaceNameText = workspaceName.toUpperCase();
-  workspace.querySelector("h3").innerHTML = workspaceNameText;
+  workspace.querySelector("p").innerHTML = workspaceNameText;
   return workspace;
 }
 
@@ -231,11 +231,15 @@ function showWebsitesView() {
 // Show All Workspace View
 document.getElementById("showAllWorkspaces").onclick = function() {
   var workspaces = document.getElementById("workspaces");
-  workspaces.style.height = "auto";
+
+  workspaces.style.width = "105%";
+  workspaces.style.overflowX = "hidden";
+  workspaces.style.overflowY = "scroll";
   workspaces.style.whiteSpace = "normal";
+  workspaces.style.height = "80%";
   hideWebsitesView();
   $("#workspacesContainer").animate({
-    height: workspaces.offsetHeight}, 1000);
+    height: "100%"}, 1000);
   $("#showAllWorkspaces").hide();
   $("#workspacesBackButton").show();
   $("#workspaceArrowLeft").fadeOut();
@@ -246,8 +250,13 @@ document.getElementById("showAllWorkspaces").onclick = function() {
 document.getElementById("workspacesBackButton").onclick = function() {
   var workspacesContainer = $("#workspacesContainer")
   var main = document.getElementById("main");
+  var workspaces = document.getElementById("workspaces");
 
-  workspacesContainer.animate({height: 210}, 1000);
+  workspaces.style.width = "auto";
+  workspaces.style.overflowX = "scroll";
+  workspaces.style.overflowY = "hidden";
+  workspacesContainer.animate({
+    height: "210px"}, 1000);
   $("#workspacesBackButton").hide(200);
   $("#showAllWorkspaces").show(200);
   $("#workspaceArrowLeft").fadeIn();
