@@ -254,17 +254,21 @@ VIEW - WORKSPACE
 #workspaces {
   overflow-x: scroll;
   overflow-y: hidden;
-  /*white-space: nowrap;*/
+  white-space: nowrap;
   height: 80%;
   padding: 0px 0px 200px 0px;
-  width: auto;
 }
 
 #workspaces li {
   display: inline-block;
-  float: left;
   margin: 0px;
   padding: 0px;
+}
+
+.placeholder {
+  height: 160px;
+  width: 160px;
+	float: left;
 }
 
 .workspace {
@@ -317,6 +321,18 @@ VIEW - WORKSPACE
   display: none;
 }
 
+#organizeWorkspacesButton {
+  display: none;
+}
+
+#workspacesCancelButton {
+	display: none;
+}
+
+#workspacesSaveButton {
+	display: none;
+}
+
 .workspaceName {
   margin: 0px;
   text-align: center;
@@ -337,6 +353,23 @@ VIEW - WORKSPACE
   color: #66cc66;
   text-align: center;
   font-size: 12px;
+}
+
+#helperMessageContainer {
+	display: none;
+	text-align: center;
+	padding: 5px 10px 5px 10px;
+	height: auto;
+	width: 400px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -210px;
+	background-color: #000000;
+	font-size: 14px;
+	opacity: 0.6;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
 
 /********************************

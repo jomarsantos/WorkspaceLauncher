@@ -5,10 +5,6 @@ var workspaces = {};
 /////////////////////////
 // COMMON
 /////////////////////////
-$("#workspaces").sortable({
-    handle: 'button',
-    cancel: ''
-}).disableSelection();
 
 // Hide New Workspace Dialogue On Mouse Click Elsewhere
 document.addEventListener('mouseup', function (e) {
@@ -128,24 +124,29 @@ function showNewWorkspace(workspaceName, id) {
   var firstWorkspace = document.getElementsByClassName("workspaceItem")[0];
   var workspace = createWorkspaceButton(workspaceName, id);
   workspacesDiv.insertBefore(workspace, firstWorkspace);
+	$('#workspaces').animate({scrollLeft: 0}, 400);
 }
 
 
 // Load Workspaces on Startup
-function loadWorkspaces() {
-  var workspacesDiv = document.getElementById("workspaces");
-  var i, clone, workspaceName, workspace, id;
-
+function initializeWorkspaces() {
   chrome.storage.sync.get({workspaces: {}}, function(data) {
     workspaces = data.workspaces;
-
-    for (var workspace in workspaces) {
-      workspaceName = workspaces[workspace].name;
-      id = workspaceName.replace(/\s+/g, '-').toLowerCase();
-      workspace = createWorkspaceButton(workspaceName, id);
-      workspacesDiv.appendChild(workspace);
-    }
+		loadWorkspaces();
   });
+}
+
+// Load Workspaces
+function loadWorkspaces() {
+	var workspacesDiv = document.getElementById("workspaces");
+  var i, clone, workspaceName, workspace, id;
+
+	for (var workspace in workspaces) {
+		workspaceName = workspaces[workspace].name;
+		id = workspaceName.replace(/\s+/g, '-').toLowerCase();
+		workspace = createWorkspaceButton(workspaceName, id);
+		workspacesDiv.appendChild(workspace);
+	}
 }
 
 // Returns the Button of a Workspace
@@ -155,6 +156,7 @@ function createWorkspaceButton(workspaceName, id) {
   var workspace = document.importNode(workspaceTemplate.content, true).querySelector("li");
   var workspaceNameText;
 
+	workspace.id = id;
   workspace.onclick = function() {
     openWorkspace(workspaceName, id);
   }
@@ -231,7 +233,8 @@ $("#workspaceArrowRight").click(function(){
   var workspacesContainer = document.getElementById("workspaces");
   var containerWidth = workspacesContainer.offsetWidth;
 
-  if (workspacesContainer.scrollLeft < (workspaces.length - 4) * 160) {
+
+  if (workspacesContainer.scrollLeft < (Object.keys(workspaces).length - 4) * 160) {
     var diff = 160 - workspacesContainer.scrollLeft % 160;
     var workspacesContainer = document.getElementById("workspaces");
     $('#workspaces').animate({scrollLeft: workspacesContainer.scrollLeft +
@@ -256,16 +259,19 @@ function showWebsitesView() {
 document.getElementById("showAllWorkspaces").onclick = function() {
   var workspaces = document.getElementById("workspaces");
 
+	workspaces.style.whiteSpace = "normal";
   workspaces.style.width = "105%";
   workspaces.style.overflowX = "hidden";
   workspaces.style.overflowY = "scroll";
-  workspaces.style.whiteSpace = "normal";
   workspaces.style.height = "80%";
   hideWebsitesView();
   $("#workspacesContainer").animate({
     height: "100%"}, 1000);
-  $("#showAllWorkspaces").hide();
+
+	$("#showAllWorkspaces").hide();
   $("#workspacesBackButton").show();
+  $("#organizeWorkspacesButton").show();
+
   $("#workspaceArrowLeft").fadeOut();
   $("#workspaceArrowRight").fadeOut();
 }
@@ -282,8 +288,9 @@ document.getElementById("workspacesBackButton").onclick = function() {
   $('#workspaces').animate({scrollTop: 0}, 300);
   workspacesContainer.animate({
     height: "210px"}, 1000);
-  $("#workspacesBackButton").hide(200);
-  $("#showAllWorkspaces").show(200);
+  $("#workspacesBackButton").hide();
+  $("#organizeWorkspacesButton").hide();
+  $("#showAllWorkspaces").show();
   $("#workspaceArrowLeft").fadeIn();
   $("#workspaceArrowRight").fadeIn();
   setTimeout(showWebsitesView, 1000);
@@ -298,9 +305,68 @@ function setDefaultWorkspaceDiv() {
   workspaces.style.whiteSpace = "nowrap";
 }
 
+// Activate Organization of Workspaces
+document.getElementById("organizeWorkspacesButton").onclick = function() {
+	this.style.opacity = "1";
+	this.style.cursor = "default";
+
+  $('#workspaces li').css('float','left');
+  $("#workspaces").sortable({
+		disabled: false,
+    handle: 'button',
+    cancel: '',
+    placeholder: 'placeholder',
+    forcePlaceholderSize: true
+  }).disableSelection();
+	$("#workspacesCancelButton").show();
+	$("#workspacesSaveButton").show();
+
+	$("#workspacesBackButton").hide();
+	$("#addWorkspaceButton").hide();
+
+	showHelperMessage("DRAG AND DROP WORKSPACES TO REORDER.<br> DON'T FORGET TO SAVE YOUR CHANGES.", 3000)
+}
+
+// Cancel Organization of Workspaces
+document.getElementById("workspacesCancelButton").onclick = function() {
+	var organizeButton = document.getElementById("organizeWorkspacesButton");
+	var workspaceItems = document.getElementsByClassName('workspaceItem');
+
+	organizeButton.style.opacity = "0.8";
+	organizeButton.style.cursor = "pointer";
+	$('#workspaces li').css('float','none');
+	$("#workspaces").sortable({
+		disabled: true
+	});
+	$("#workspacesCancelButton").hide();
+	$("#workspacesSaveButton").hide();
+
+	$("#workspacesBackButton").show();
+	$("#addWorkspaceButton").show();
+
+	while(workspaceItems[0]) {
+		workspaceItems[0].parentNode.removeChild(workspaceItems[0]);
+	}
+	loadWorkspaces();
+}
+
+// Show helper message
+function showHelperMessage(message, duration) {
+	$("#helperMessage").html(message);
+	$("#helperMessageContainer").slideDown();
+	setTimeout(hideHelperMessage, duration)
+}
+
+// Hide helper message
+function hideHelperMessage() {
+	$("#helperMessageContainer").slideUp();
+	$("#helperMessage").html("");
+}
+
+
 /////////////////////////
 // INITIALIZE
 /////////////////////////
 
 addTab("regularTab");
-loadWorkspaces();
+initializeWorkspaces();
