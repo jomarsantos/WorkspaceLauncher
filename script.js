@@ -270,6 +270,7 @@ document.getElementById("showAllWorkspaces").onclick = function() {
 
 	$("#showAllWorkspaces").hide();
   $("#workspacesBackButton").show();
+	$("#workspacesEditButton").show();
   $("#organizeWorkspacesButton").show();
 
   $("#workspaceArrowLeft").fadeOut();
@@ -289,6 +290,7 @@ document.getElementById("workspacesBackButton").onclick = function() {
   workspacesContainer.animate({
     height: "210px"}, 1000);
   $("#workspacesBackButton").hide();
+	$("#workspacesEditButton").hide();
   $("#organizeWorkspacesButton").hide();
   $("#showAllWorkspaces").show();
   $("#workspaceArrowLeft").fadeIn();
@@ -322,6 +324,7 @@ document.getElementById("organizeWorkspacesButton").onclick = function() {
 	$("#workspacesSaveButton").show();
 
 	$("#workspacesBackButton").hide();
+	$("#workspacesEditButton").hide();
 	$("#addWorkspaceButton").hide();
 
 	showHelperMessage("DRAG AND DROP WORKSPACES TO REORDER.<br> DON'T FORGET TO SAVE YOUR CHANGES.", 3000)
@@ -342,6 +345,7 @@ document.getElementById("workspacesCancelButton").onclick = function() {
 	$("#workspacesSaveButton").hide();
 
 	$("#workspacesBackButton").show();
+	$("#workspacesEditButton").show();
 	$("#addWorkspaceButton").show();
 
 	while(workspaceItems[0]) {

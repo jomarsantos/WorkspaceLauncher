@@ -333,6 +333,10 @@ VIEW - WORKSPACE
 	display: none;
 }
 
+#workspacesEditButton {
+	display: none;
+}
+
 .workspaceName {
   margin: 0px;
   text-align: center;
