@@ -6,7 +6,7 @@ MAIN
 
 @font-face {
     font-family: "Avenir Next LT Pro Demi";
-    src: url("AvenirNextLTPro-Demi.otf") format("opentype");
+    src: url("/assets/fonts/AvenirNextLTPro-Demi.otf") format("opentype");
 }
 
 /*GENERAL*/
@@ -15,7 +15,7 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
-  background-image: url("images/workspace.jpg");
+  background-image: url("/assets/images/workspace.jpg");
 
   font-family: "Avenir Next LT Pro Demi";
   color: #FFFFFF;
