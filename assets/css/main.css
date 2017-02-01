@@ -15,8 +15,8 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
-  background-image: url("/assets/images/workspace.jpg");
-
+  /*background-image: url("/assets/images/workspace.jpg");*/
+	background-color: #000000;
   font-family: "Avenir Next LT Pro Demi";
   color: #FFFFFF;
   overflow-y: hidden;
@@ -53,6 +53,14 @@ button:focus {
   outline: 0;
 }
 
+.fade {
+	-webkit-transition: all 250ms ease;
+	-moz-transition: all 250ms ease;
+	-ms-transition: all 250ms ease;
+	-o-transition: all 250ms ease;
+	transition: all 250ms ease;
+}
+
 /********************************
 SIDEBAR - COMMON
 ********************************/
@@ -65,12 +73,11 @@ SIDEBAR - COMMON
   z-index: 1;
   top: 0;
   right: 0;
-  background-color: #000000;
+  background-color: #141414;
   overflow-x: hidden;
   padding-top: 60px;
   color: #FFFFFF;
   font-size: 16px;
-  opacity: 0.8;
 }
 
 #closeSidebar {
@@ -81,11 +88,10 @@ SIDEBAR - COMMON
   font-size: 36px !important;
   color: #FFFFFF;
   cursor: pointer;
-  opacity: 0.9;
 }
 
 #closeSidebar:hover {
-  opacity: 1;
+	color: #babebb;
 }
 
 /********************************
@@ -132,11 +138,10 @@ SIDEBAR - WORKSPACE
   border: none;
   cursor: pointer;
   font-size: 16px;
-  opacity: 0.9;
 }
 
 .removeTab:hover {
-  opacity: 1;
+	color: #babebb;
 }
 
 .addTabButton {
@@ -151,8 +156,7 @@ SIDEBAR - WORKSPACE
 }
 
 .addTabButton:hover {
-  color: #FFFFFF;
-  opacity: 0.8;
+  color: #babebb;
 }
 
 #saveWorkspace {
@@ -161,7 +165,7 @@ SIDEBAR - WORKSPACE
   height: 40px;
   width: 100px;
   font-size: 12px;
-  background-color: #000000;
+  background-color: #1f1f20;
   border-radius: 0px;
   border-style: solid;
   border-width: 2px;
@@ -172,7 +176,7 @@ SIDEBAR - WORKSPACE
 }
 
 #saveWorkspace:hover {
-  background-color: #0F1112;
+	border-color: #babebb;
 }
 
 /********************************
@@ -223,12 +227,12 @@ VIEW - COMMON
   margin: 0px 5px 0px 15px;
   top: 15px;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 1;
   float: right;
 }
 
 .headerButton:hover {
-  opacity: 1;
+	color:#babebb;
 }
 
 /********************************
@@ -272,6 +276,7 @@ VIEW - WORKSPACE
 }
 
 .workspace {
+	border-radius: 10px;
   padding: 0px;
   margin-left: 5px;
   margin-right: 5px;
@@ -283,38 +288,13 @@ VIEW - WORKSPACE
   text-decoration: none;
   display: inline-block;
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
+  background: #000000;
+	border: 1px solid #ffffff;
+	cursor: pointer;
 }
 
 .workspace:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.workspaceArrows {
-  position: absolute;
-  top: 110px;
-  background: transparent;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  color: #FFFFFF;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  opacity: 0.6;
-}
-
-.workspaceArrows:hover {
-  opacity: 0.8;
-}
-
-#workspaceArrowLeft {
-  left: -30px;
-}
-
-#workspaceArrowRight {
-  right: -30px;
+	border-color: #babebb;
 }
 
 #workspacesBackButton {

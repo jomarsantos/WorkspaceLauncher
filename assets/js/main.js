@@ -159,7 +159,11 @@ function createWorkspaceButton(workspaceName, id) {
 	workspace.id = id;
   workspace.onclick = function() {
     openWorkspace(workspaceName, id);
-  }
+		chrome.tabs.getCurrent( function(tab){
+			console.log(tab.id);
+			chrome.tabs.remove(tab.id);
+		})
+	}
 
   workspaceNameText = workspaceName.toUpperCase();
   workspace.querySelector("p").innerHTML = workspaceNameText;
@@ -210,100 +214,50 @@ document.getElementById("addWorkspaceButton").onclick = function() {
   toggleSidebar();
 }
 
-// Handle Left Scrolling of Workspaces
-$("#workspaceArrowLeft").click(function(){
-  var workspacesContainer = document.getElementById("workspaces");
-  var containerWidth = workspacesContainer.offsetWidth;
-  var diff = workspacesContainer.scrollLeft % 160;
-
-  if (workspacesContainer.scrollLeft > 0) {
-    if (diff ==  0) {
-      $('#workspaces').animate({scrollLeft: workspacesContainer.scrollLeft -
-        containerWidth}, 400);
-    } else {
-      $('#workspaces').animate({scrollLeft: workspacesContainer.scrollLeft -
-        diff - containerWidth + 160}, 400);
-    }
-    return false;
-  }
-});
-
-// Handle Right Scrolling of Workspaces
-$("#workspaceArrowRight").click(function(){
-  var workspacesContainer = document.getElementById("workspaces");
-  var containerWidth = workspacesContainer.offsetWidth;
-
-
-  if (workspacesContainer.scrollLeft < (Object.keys(workspaces).length - 4) * 160) {
-    var diff = 160 - workspacesContainer.scrollLeft % 160;
-    var workspacesContainer = document.getElementById("workspaces");
-    $('#workspaces').animate({scrollLeft: workspacesContainer.scrollLeft +
-      diff + containerWidth - 160}, 400);
-    return false;
-  }
-});
-
-// Hide Websites View
-function hideWebsitesView() {
-  var websitesContainer = $("#websitesContainer");
-  websitesContainer.fadeOut(400);
-}
-
-// Show Websites View
-function showWebsitesView() {
-  var websitesContainer = $("#websitesContainer");
-  websitesContainer.fadeIn(400);
-}
-
 // Show All Workspace View
 document.getElementById("showAllWorkspaces").onclick = function() {
   var workspaces = document.getElementById("workspaces");
+	var workspacesContainer = document.getElementById("workspacesContainer");
+	var websitesContainer = document.getElementById("websitesContainer");
 
 	workspaces.style.whiteSpace = "normal";
+	workspaces.style.height = "80%";
   workspaces.style.width = "105%";
   workspaces.style.overflowX = "hidden";
   workspaces.style.overflowY = "scroll";
-  workspaces.style.height = "80%";
-  hideWebsitesView();
-  $("#workspacesContainer").animate({
-    height: "100%"}, 1000);
+	workspacesContainer.style.height = "100%";
+	websitesContainer.style.display = "none";
 
 	$("#showAllWorkspaces").hide();
   $("#workspacesBackButton").show();
 	$("#workspacesEditButton").show();
   $("#organizeWorkspacesButton").show();
-
-  $("#workspaceArrowLeft").fadeOut();
-  $("#workspaceArrowRight").fadeOut();
 }
 
 // Hide All Workspace View
 document.getElementById("workspacesBackButton").onclick = function() {
-  var workspacesContainer = $("#workspacesContainer")
-  var main = document.getElementById("main");
-  var workspaces = document.getElementById("workspaces");
+	var workspaces = document.getElementById("workspaces");
+	var workspacesContainer = document.getElementById("workspacesContainer");
+	var websitesContainer = document.getElementById("websitesContainer");
 
+	workspaces.style.whiteSpace = "nowrap";
+	workspaces.style.height = "210px";
   workspaces.style.width = "auto";
-  workspaces.style.overflowX = "scroll";
+	workspaces.style.overflowX = "scroll";
   workspaces.style.overflowY = "hidden";
-  $('#workspaces').animate({scrollTop: 0}, 300);
-  workspacesContainer.animate({
-    height: "210px"}, 1000);
+	workspacesContainer.style.height = "210px";
+	websitesContainer.style.display = "block";
+
   $("#workspacesBackButton").hide();
 	$("#workspacesEditButton").hide();
   $("#organizeWorkspacesButton").hide();
   $("#showAllWorkspaces").show();
-  $("#workspaceArrowLeft").fadeIn();
-  $("#workspaceArrowRight").fadeIn();
-  setTimeout(showWebsitesView, 1000);
-  setTimeout(setDefaultWorkspaceDiv, 1000);
 }
 
 // Helper for Correct Timing of Back Button
 function setDefaultWorkspaceDiv() {
   var workspaces = document.getElementById("workspaces");
-
-  workspaces.style.height = "auto";
+	workspaces.style.height = "210px";
   workspaces.style.whiteSpace = "nowrap";
 }
 
