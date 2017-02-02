@@ -12,14 +12,15 @@ MAIN
 /*GENERAL*/
 
 body {
+	margin: 0;
+	padding: 0;
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
   /*background-image: url("/assets/images/workspace.jpg");*/
-	background-color: #000000;
+	background-color: #0c0c0d;
   font-family: "Avenir Next LT Pro Demi";
-  color: #FFFFFF;
-  overflow-y: hidden;
+  color: #737986;
 }
 
 h1, h4, h5, h6 {
@@ -46,7 +47,7 @@ h6 {
 
 button {
   font-family: "Avenir Next LT Pro Demi";
-  color: #FFFFFF;
+  color: #737986;
 }
 
 button:focus {
@@ -184,12 +185,9 @@ VIEW - COMMON
 ********************************/
 
 #main {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  margin-left: -320px;
-  height: 90%;
-  width: 640px;
+	margin: 100px auto;
+  height: auto;
+  width: 660px;
 }
 
 .indexContainer {
@@ -198,8 +196,7 @@ VIEW - COMMON
 
 @media screen and (max-width: 768px) {
   #main {
-    margin-left: -240px;
-    width: 480px;
+    width: 500px;
   }
 
   .indexContainer {
@@ -209,8 +206,7 @@ VIEW - COMMON
 
 @media screen and (max-width: 600px) {
   #main {
-    margin-left: -160px;
-    width: 320px;
+    width: 340px;
   }
 
   .indexContainer {
@@ -220,15 +216,12 @@ VIEW - COMMON
 
 .headerButton {
   display: inline-block;
-  position: relative;
   background: none;
   border: none;
   padding: 0px;
-  margin: 0px 5px 0px 15px;
-  top: 15px;
+  margin: 0px 5px;
   cursor: pointer;
   opacity: 1;
-  float: right;
 }
 
 .headerButton:hover {
@@ -240,27 +233,48 @@ VIEW - WORKSPACE
 ********************************/
 
 #workspacesContainer {
-  height: 210px;
+	padding: 10px;
+  height: 120px;
   margin-bottom: 20px;
   overflow: hidden;
+	background-color: #070708;
+	border-radius: 10px;
 }
 
 #workspacesHeader {
   height: 40px;
-  margin-bottom: 10px;
+	margin-bottom: 25px;
+	text-align: center;
 }
 
 #workspacesHeader h1 {
-  display: inline-block;
-  margin-left: 5px;
+  display: block;
+}
+
+#workspaceTitle {
+	margin: 0 auto;
+	width: 180px;
+	cursor: pointer;
+}
+
+#workspaceTitle:hover {
+	color: #babebb;
+}
+
+#no_workspaces {
+	margin: 30px auto;
+	width: 300px;
+	opacity: 0.6;
+	text-align: center;
 }
 
 #workspaces {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  height: 80%;
-  padding: 0px 0px 200px 0px;
+  height: 40%;
+  padding: 0px 0px 50px 0px;
+	margin: 0;
 }
 
 #workspaces li {
@@ -282,19 +296,20 @@ VIEW - WORKSPACE
   margin-right: 5px;
   margin-bottom: 10px;
   position: static;
-  height: 150px;
+  height: 50px;
   width: 150px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  color: #FFFFFF;
-  background: #000000;
-	border: 1px solid #ffffff;
+  color: #737986;
+  background-color: #0f0f11;
+	border: 0px solid #000000;
 	cursor: pointer;
 }
 
 .workspace:hover {
-	border-color: #babebb;
+	background-color: #0d0d0f;
+	color: #8a92a2;
 }
 
 #workspacesBackButton {
@@ -320,9 +335,9 @@ VIEW - WORKSPACE
 .workspaceName {
   margin: 0px;
   text-align: center;
-  width: 130px;
-  height: 50px;
-  padding: 0px 10px 0px 10px;
+  width: 150px;
+  height: 10px;
+  padding: 16px 0px;
   word-wrap: break-word;;
   white-space: normal;
 }

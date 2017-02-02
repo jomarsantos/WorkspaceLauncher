@@ -12,9 +12,9 @@ document.addEventListener('mouseup', function (e) {
   var exitButton = document.getElementById("closeSidebar");
   var addButton = document.getElementById("addWorkspaceButton");
   var backButton = document.getElementById("workspacesBackButton");
-  var showAllButton = document.getElementById("showAllWorkspaces");
+  var workspaceTitle = document.getElementById("workspaceTitle");
   if (( !sidebar.contains(e.target) || e.target == exitButton) &&
-      (e.target != addButton && e.target != backButton && e.target != showAllButton)) {
+      (e.target != addButton && e.target != backButton && e.target != workspaceTitle)) {
     if (getComputedStyle(sidebar).display == "block") {
       toggleSidebar();
     }
@@ -104,6 +104,8 @@ document.getElementById("saveWorkspace").onclick = function() {
   }
   workspaces[id] = newWorkspace;
   chrome.storage.sync.set({workspaces: workspaces});
+
+	updateNoWorkspaceMessage();
   showNewWorkspace(workspaceName, id);
 
   successMsg = document.getElementById("workspaceSuccess");
@@ -133,6 +135,7 @@ function initializeWorkspaces() {
   chrome.storage.sync.get({workspaces: {}}, function(data) {
     workspaces = data.workspaces;
 		loadWorkspaces();
+		updateNoWorkspaceMessage();
   });
 }
 
@@ -215,20 +218,20 @@ document.getElementById("addWorkspaceButton").onclick = function() {
 }
 
 // Show All Workspace View
-document.getElementById("showAllWorkspaces").onclick = function() {
+document.getElementById("workspaceTitle").onclick = function() {
   var workspaces = document.getElementById("workspaces");
 	var workspacesContainer = document.getElementById("workspacesContainer");
 	var websitesContainer = document.getElementById("websitesContainer");
 
 	workspaces.style.whiteSpace = "normal";
-	workspaces.style.height = "80%";
-  workspaces.style.width = "105%";
+	workspaces.style.height = "auto";
+  workspaces.style.width = "115%";
   workspaces.style.overflowX = "hidden";
   workspaces.style.overflowY = "scroll";
-	workspacesContainer.style.height = "100%";
+	workspaces.style.padding = "0px";
+	workspacesContainer.style.height = "auto";
 	websitesContainer.style.display = "none";
 
-	$("#showAllWorkspaces").hide();
   $("#workspacesBackButton").show();
 	$("#workspacesEditButton").show();
   $("#organizeWorkspacesButton").show();
@@ -245,13 +248,13 @@ document.getElementById("workspacesBackButton").onclick = function() {
   workspaces.style.width = "auto";
 	workspaces.style.overflowX = "scroll";
   workspaces.style.overflowY = "hidden";
-	workspacesContainer.style.height = "210px";
+	workspaces.style.padding = "0px 0px 50px 0px";
+	workspacesContainer.style.height = "125px";
 	websitesContainer.style.display = "block";
 
   $("#workspacesBackButton").hide();
 	$("#workspacesEditButton").hide();
   $("#organizeWorkspacesButton").hide();
-  $("#showAllWorkspaces").show();
 }
 
 // Helper for Correct Timing of Back Button
@@ -321,6 +324,15 @@ function hideHelperMessage() {
 	$("#helperMessage").html("");
 }
 
+// Update No Workspace Message
+function updateNoWorkspaceMessage() {
+	var no_workspaces = document.getElementById("no_workspaces");
+	if (Object.keys(workspaces).length != 0) {
+		no_workspaces.style.display = "none";
+	} else {
+		no_workspaces.style.display = "block";
+	}
+}
 
 /////////////////////////
 // INITIALIZE
