@@ -1,6 +1,7 @@
 var numPinnedTabs = 0;
 var numRegularTabs = 0;
 var workspaces = {};
+var order = [];
 
 /////////////////////////
 // COMMON
@@ -74,7 +75,7 @@ document.getElementById("saveWorkspace").onclick = function() {
 
   errorMsg.innerHTML = "";
   workspaceName = document.getElementById("workspaceName").value;
-  id = workspaceName.replace(/\s+/g, '-').toLowerCase();
+  id = workspaceName.trim().replace(/\s+/g, '-').toLowerCase();
 
   for (i = 0; i < pinnedTabs.length; i++) {
     tab = {
@@ -99,7 +100,12 @@ document.getElementById("saveWorkspace").onclick = function() {
     tabs: workspaceTabs
   }
 
-	if (!/^[a-z0-9]+$/i.test(workspaceName)) {
+	if (workspaces.hasOwnProperty(id)) {
+		errorMsg.innerHTML = "Workspace with same name exists already.";
+		return;
+	}
+
+	if (!/^[a-z\d_\s]+$/i.test(workspaceName)) {
 		errorMsg.innerHTML = "Workspace names cannot contain symbols.";
 		return;
 	}
@@ -109,7 +115,8 @@ document.getElementById("saveWorkspace").onclick = function() {
     return;
   }
   workspaces[id] = newWorkspace;
-  chrome.storage.sync.set({workspaces: workspaces});
+	order.unshift(id);
+  chrome.storage.sync.set({workspaces: workspaces, order: order});
 
 	updateNoWorkspaceMessage();
   showNewWorkspace(workspaceName, id);
@@ -138,8 +145,9 @@ function showNewWorkspace(workspaceName, id) {
 
 // Load Workspaces on Startup
 function initializeWorkspaces() {
-  chrome.storage.sync.get({workspaces: {}}, function(data) {
+  chrome.storage.sync.get({workspaces: {}, order: []}, function(data) {
     workspaces = data.workspaces;
+		order = data.order;
 		loadWorkspaces();
 		updateNoWorkspaceMessage();
   });
@@ -150,8 +158,8 @@ function loadWorkspaces() {
 	var workspacesDiv = document.getElementById("workspaces");
   var i, clone, workspaceName, workspace, id;
 
-	for (var workspace in workspaces) {
-		workspaceName = workspaces[workspace].name;
+	for (i = 0; i < order.length; i++) {
+		workspaceName = workspaces[order[i]].name;
 		id = workspaceName.replace(/\s+/g, '-').toLowerCase();
 		workspace = createWorkspaceButton(workspaceName, id);
 		workspacesDiv.appendChild(workspace);
