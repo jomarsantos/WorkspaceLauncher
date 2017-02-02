@@ -17,6 +17,7 @@ document.addEventListener('mouseup', function (e) {
       (e.target != addButton && e.target != backButton && e.target != workspaceTitle)) {
     if (getComputedStyle(sidebar).display == "block") {
       toggleSidebar();
+			resetWorkspaceForm();
     }
   }
 }.bind(this));
@@ -98,8 +99,13 @@ document.getElementById("saveWorkspace").onclick = function() {
     tabs: workspaceTabs
   }
 
+	if (!/^[a-z0-9]+$/i.test(workspaceName)) {
+		errorMsg.innerHTML = "Workspace names cannot contain symbols.";
+		return;
+	}
+
   if (workspaceName == "") {
-    errorMsg.innerHTML = "Oops! You forgot to name your workspace.<br>Be creative!";
+    errorMsg.innerHTML = "Don't forget to name your workspace.";
     return;
   }
   workspaces[id] = newWorkspace;
