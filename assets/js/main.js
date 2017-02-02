@@ -175,18 +175,23 @@ function createWorkspaceButton(workspaceName, id) {
   var workspace = document.importNode(workspaceTemplate.content, true).querySelector("li");
   var workspaceNameText;
 
+	workspaceNameText = workspaceName.toUpperCase();
+  workspace.querySelector("p").innerHTML = workspaceNameText;
+
 	workspace.id = id;
   workspace.onclick = function() {
     openWorkspace(workspaceName, id);
-		chrome.tabs.getCurrent( function(tab){
-			console.log(tab.id);
-			chrome.tabs.remove(tab.id);
-		})
+		showHelperMessage(workspaceNameText + " WORKSPACE HAS BEEN LAUNCHED.", 2500)
+		setTimeout(closeLauncher, 3500);
 	}
 
-  workspaceNameText = workspaceName.toUpperCase();
-  workspace.querySelector("p").innerHTML = workspaceNameText;
   return workspace;
+}
+
+function closeLauncher() {
+	chrome.tabs.getCurrent( function(tab){
+		chrome.tabs.remove(tab.id);
+	})
 }
 
 // Open Workspace Clicked
@@ -282,7 +287,7 @@ function setDefaultWorkspaceDiv() {
 
 // Activate Organization of Workspaces
 document.getElementById("organizeWorkspacesButton").onclick = function() {
-	this.style.opacity = "1";
+	this.style.color = "#ffffff";
 	this.style.cursor = "default";
 
   $('#workspaces li').css('float','left');
@@ -300,7 +305,33 @@ document.getElementById("organizeWorkspacesButton").onclick = function() {
 	$("#workspacesEditButton").hide();
 	$("#addWorkspaceButton").hide();
 
-	showHelperMessage("DRAG AND DROP WORKSPACES TO REORDER.<br> DON'T FORGET TO SAVE YOUR CHANGES.", 3000)
+	showHelperMessage("DRAG AND DROP WORKSPACES TO REORDER.<br> DON'T FORGET TO SAVE YOUR CHANGES.", 4000)
+}
+
+document.getElementById("workspacesSaveButton").onclick = function() {
+	var organizeButton = document.getElementById("organizeWorkspacesButton");
+	var workspaceItems = document.getElementsByClassName('workspaceItem');
+	var newOrder = [];
+
+	for (var i = 0; i < workspaceItems.length; i++) {
+		// console.log(workspaceItems[i].id);
+		newOrder.push(workspaceItems[i].id);
+	}
+
+	chrome.storage.sync.set({order: newOrder});
+
+	organizeButton.style.color = "#737986";
+	organizeButton.style.cursor = "pointer";
+	$('#workspaces li').css('float','none');
+	$("#workspaces").sortable({
+		disabled: true
+	});
+	$("#workspacesCancelButton").hide();
+	$("#workspacesSaveButton").hide();
+
+	$("#workspacesBackButton").show();
+	$("#workspacesEditButton").show();
+	$("#addWorkspaceButton").show();
 }
 
 // Cancel Organization of Workspaces
@@ -308,7 +339,7 @@ document.getElementById("workspacesCancelButton").onclick = function() {
 	var organizeButton = document.getElementById("organizeWorkspacesButton");
 	var workspaceItems = document.getElementsByClassName('workspaceItem');
 
-	organizeButton.style.opacity = "0.8";
+	organizeButton.style.color = "#737986";
 	organizeButton.style.cursor = "pointer";
 	$('#workspaces li').css('float','none');
 	$("#workspaces").sortable({
