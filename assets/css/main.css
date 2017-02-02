@@ -74,10 +74,10 @@ SIDEBAR - COMMON
   z-index: 1;
   top: 0;
   right: 0;
-  background-color: #141414;
+  background-color: #121213;
   overflow-x: hidden;
   padding-top: 60px;
-  color: #FFFFFF;
+  color: #737986;
   font-size: 16px;
 }
 
@@ -87,7 +87,6 @@ SIDEBAR - COMMON
   left: 10px;
   margin: 0px;
   font-size: 36px !important;
-  color: #FFFFFF;
   cursor: pointer;
 }
 
@@ -123,11 +122,11 @@ SIDEBAR - WORKSPACE
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 2px solid #FFFFFF;
+  border-bottom: 2px solid #737986;
   width: 220px;
   font-family: "Avenir Next LT Pro Demi";
   font-size: 12px;
-  color: #FFFFFF;
+  color: #737986;
 }
 
 /*BUTTONS*/
@@ -135,7 +134,6 @@ SIDEBAR - WORKSPACE
 .removeTab {
   background: transparent;
   display: inline-block;
-  color: #FFFFFF;
   border: none;
   cursor: pointer;
   font-size: 16px;
@@ -151,7 +149,7 @@ SIDEBAR - WORKSPACE
   font-size: 10px;
   background: transparent;
   border: none;
-  color: #FFFFFF;
+  color: #737986;
   opacity: 0.6;
   cursor: pointer;
 }
@@ -166,18 +164,16 @@ SIDEBAR - WORKSPACE
   height: 40px;
   width: 100px;
   font-size: 12px;
-  background-color: #1f1f20;
-  border-radius: 0px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #FFFFFF;
+  background-color: #0a0a0b;
+  border-radius: 10px;
+  border-style: none;
   cursor: pointer;
-  color: #FFFFFF;
-
+  color: #737986;
 }
 
 #saveWorkspace:hover {
-	border-color: #babebb;
+	background-color: #050506;
+	color: #8a92a2;
 }
 
 /********************************
@@ -272,7 +268,8 @@ VIEW - WORKSPACE
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  height: 40%;
+	width: auto;
+  height: 210px;
   padding: 0px 0px 50px 0px;
 	margin: 0;
 }
@@ -302,13 +299,13 @@ VIEW - WORKSPACE
   text-decoration: none;
   display: inline-block;
   color: #737986;
-  background-color: #0f0f11;
+  background-color: #0d0d0f;
 	border: 0px solid #000000;
 	cursor: pointer;
 }
 
 .workspace:hover {
-	background-color: #0d0d0f;
+	background-color: #111113;
 	color: #8a92a2;
 }
 

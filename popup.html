@@ -2,18 +2,20 @@
 <html>
   <head>
     <title>Workspace Launcher</title>
-    <link rel="stylesheet" type="text/css" href="popup.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/popup.css">
   </head>
   <body>
-  <h1 id="title">SAVE CURRENT TABS</h1>
+		<div id="header">
+		  <h1 id="title">SAVE CURRENT WINDOW'S TABS</h1>
+		</div>
+	  <h2 class="newWorkspaceSubTitle">WORKSPACE NAME</h2>
+	  <input id="workspaceName" type="text" maxlength="18">
+	  <br />
+	  <br />
 
-  <h2 class="newWorkspaceSubTitle">WORKSPACE NAME:</h2>
-  <input id="workspaceName" type="text">
-  <br />
-  <br />
+	  <button class="button fade" id="createNewWorkspace" type="submit">CREATE</button>
+		<p id="message"></p>
 
-  <button class="button" id="createNewWorkspace" type="submit">CREATE</button>
-
-  <script src="popup.js"></script>
+	  <script src="assets/js/popup.js"></script>
   </body>
 </html>

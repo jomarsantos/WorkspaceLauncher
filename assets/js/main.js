@@ -101,7 +101,13 @@ document.getElementById("saveWorkspace").onclick = function() {
   }
 
 	if (workspaces.hasOwnProperty(id)) {
-		errorMsg.innerHTML = "Workspace with same name exists already.";
+		errorMsg.innerHTML = "Workspace with same name already exists.";
+		return;
+	}
+
+	if (workspaceName.trim() == "") {
+		errorMsg.innerHTML = "Don't forget to name your workspace.";
+		errorMsg.className = "workspaceError"
 		return;
 	}
 
@@ -110,10 +116,6 @@ document.getElementById("saveWorkspace").onclick = function() {
 		return;
 	}
 
-  if (workspaceName == "") {
-    errorMsg.innerHTML = "Don't forget to name your workspace.";
-    return;
-  }
   workspaces[id] = newWorkspace;
 	order.unshift(id);
   chrome.storage.sync.set({workspaces: workspaces, order: order});
@@ -263,7 +265,7 @@ document.getElementById("workspacesBackButton").onclick = function() {
 	workspaces.style.overflowX = "scroll";
   workspaces.style.overflowY = "hidden";
 	workspaces.style.padding = "0px 0px 50px 0px";
-	workspacesContainer.style.height = "125px";
+	workspacesContainer.style.height = "120px";
 	websitesContainer.style.display = "block";
 
   $("#workspacesBackButton").hide();

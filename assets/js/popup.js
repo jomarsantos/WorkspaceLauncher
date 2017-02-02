@@ -1,7 +1,7 @@
 document.getElementById("createNewWorkspace").onclick = function() {
-  chrome.storage.sync.get({workspaces: []}, function(data) {
-    var workspaces = data.workspaces;
-    console.log(workspaces);
+	chrome.storage.sync.get({workspaces: {}, order: []}, function(data) {
+    workspaces = data.workspaces;
+		order = data.order;
     chrome.tabs.getAllInWindow(function(tabs) {
       var workspaceTabs = [];
 
@@ -14,17 +14,46 @@ document.getElementById("createNewWorkspace").onclick = function() {
         workspaceTabs.push(tab);
       }
 
-      var workspaceName = document.getElementById("workspaceName").value;
+			var msg = document.getElementById("message");
+
+			msg.innerHTML = "";
+			var workspaceName = document.getElementById("workspaceName").value;
+			var id = workspaceName.trim().replace(/\s+/g, '-').toLowerCase();
+
+			if (workspaces.hasOwnProperty(id)) {
+				msg.innerHTML = "Workspace with same name already exists.";
+				msg.className = "workspaceError"
+				return;
+			}
+
+			if (workspaceName.trim() == "") {
+		    msg.innerHTML = "Don't forget to name your workspace.";
+				msg.className = "workspaceError"
+		    return;
+		  }
+
+			if (!/^[a-z\d_\s]+$/i.test(workspaceName)) {
+				msg.innerHTML = "Workspace names cannot contain symbols.";
+				msg.className = "workspaceError"
+				return;
+			}
 
       var newWorkspace = {
         name: workspaceName,
         tabs: workspaceTabs
       }
 
-      workspaces.push(newWorkspace);
-      console.log(workspaces);
+			workspaces[id] = newWorkspace;
+			order.unshift(id);
+			chrome.storage.sync.set({workspaces: workspaces, order: order});
 
-      chrome.storage.sync.set({workspaces: workspaces});
+			msg.innerHTML = "Workspace created!";
+			msg.className = "workspaceSuccess"
+			setTimeout(hide, 1000);
     });
   });
+}
+
+function hide() {
+	window.close();
 }
