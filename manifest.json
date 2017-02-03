@@ -2,6 +2,7 @@
   "manifest_version": 2,
 
   "name": "Workspace Launcher",
+	"short_name": "Workspace Launcher",
   "description": "Quickly Launch Custom Workspaces",
   "version": "1.0",
 
