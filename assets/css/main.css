@@ -127,6 +127,7 @@ SIDEBAR - WORKSPACE
   font-family: "Avenir Next LT Pro Demi";
   font-size: 12px;
   color: #737986;
+	text-transform: uppercase;
 }
 
 /*BUTTONS*/
@@ -218,6 +219,10 @@ VIEW - COMMON
   margin: 0px 5px;
   cursor: pointer;
   opacity: 1;
+}
+
+.activeButton {
+	color: #ffffff;
 }
 
 .headerButton:hover {

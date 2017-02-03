@@ -94,6 +94,7 @@ input {
 	font-family: "Avenir Next LT Pro Demi";
   width: 130px;
   color: #737986;
+	text-transform: uppercase;
 }
 
 #message {

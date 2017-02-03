@@ -287,7 +287,7 @@ function setDefaultWorkspaceDiv() {
 
 // Activate Organization of Workspaces
 document.getElementById("organizeWorkspacesButton").onclick = function() {
-	this.style.color = "#ffffff";
+	this.className = this.className + " activeButton";
 	this.style.cursor = "default";
 
   $('#workspaces li').css('float','left');
@@ -320,7 +320,7 @@ document.getElementById("workspacesSaveButton").onclick = function() {
 
 	chrome.storage.sync.set({order: newOrder});
 
-	organizeButton.style.color = "#737986";
+	organizeButton.className = "headerButton fade";
 	organizeButton.style.cursor = "pointer";
 	$('#workspaces li').css('float','none');
 	$("#workspaces").sortable({
@@ -339,7 +339,7 @@ document.getElementById("workspacesCancelButton").onclick = function() {
 	var organizeButton = document.getElementById("organizeWorkspacesButton");
 	var workspaceItems = document.getElementsByClassName('workspaceItem');
 
-	organizeButton.style.color = "#737986";
+	organizeButton.className = "headerButton fade";
 	organizeButton.style.cursor = "pointer";
 	$('#workspaces li').css('float','none');
 	$("#workspaces").sortable({
