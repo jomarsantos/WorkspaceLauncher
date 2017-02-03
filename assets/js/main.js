@@ -3,6 +3,7 @@ var numRegularTabs = 0;
 var workspaces = {};
 var order = [];
 var editMode = false;
+var currentID = "";
 
 /////////////////////////
 // COMMON
@@ -13,15 +14,18 @@ document.addEventListener('mouseup', function (e) {
   var sidebar = document.getElementById("sidebar");
   var exitButton = document.getElementById("closeSidebar");
   var addButton = document.getElementById("addWorkspaceButton");
-  var backButton = document.getElementById("workspacesBackButton");
   var workspaceTitle = document.getElementById("workspaceTitle");
   if (( !sidebar.contains(e.target) || e.target == exitButton) &&
-      (e.target != addButton && e.target != backButton && e.target != workspaceTitle)) {
+      (e.target != addButton && e.target != workspaceTitle)) {
+		currentID = "";
     if (getComputedStyle(sidebar).display == "block") {
       toggleSidebar();
-			resetWorkspaceForm();
     }
-  }
+  } else if (e.target == addButton && currentID != "") {
+		currentID = "";
+		toggleSidebar();
+	}
+
 }.bind(this));
 
 // Toggle Sidebar
@@ -78,7 +82,7 @@ document.getElementById("saveWorkspace").onclick = function() {
   var tab, i, workspaceName, id, newWorkspace, workspace;
 
   errorMsg.innerHTML = "";
-  workspaceName = document.getElementById("workspaceName").value;
+  workspaceName = document.getElementById("workspaceName").value.trim();
   id = workspaceName.trim().replace(/\s+/g, '-').toLowerCase() + "-ws";
 
   for (i = 0; i < pinnedTabs.length; i++) {
@@ -104,7 +108,7 @@ document.getElementById("saveWorkspace").onclick = function() {
     tabs: workspaceTabs
   }
 
-	if (workspaces.hasOwnProperty(id)) {
+	if (currentID != id && workspaces.hasOwnProperty(id)) {
 		errorMsg.innerHTML = "Workspace with same name already exists.";
 		return;
 	}
@@ -120,37 +124,73 @@ document.getElementById("saveWorkspace").onclick = function() {
 		return;
 	}
 
-  workspaces[id] = newWorkspace;
-	order.unshift(id);
-  chrome.storage.sync.set({workspaces: workspaces, order: order});
+	successMsg = document.getElementById("workspaceSuccess");
 
-	updateNoWorkspaceMessage();
-  showNewWorkspace(workspaceName, id);
+	if (currentID) {
+		var index = order.indexOf(currentID)
+		order[index] = id;
 
-  successMsg = document.getElementById("workspaceSuccess");
-  successMsg.innerHTML = "Workspace created!";
-  setTimeout(success, 1700);
+		workspaces[id] = newWorkspace;
+		if (currentID != id) {
+			delete workspaces[currentID];
+		}
+
+		chrome.storage.sync.set({workspaces: workspaces, order: order});
+
+		var workspaceElement = document.getElementById(currentID);
+		var newworkspaceElement = createWorkspaceButton(workspaceName, id);
+		workspaceElement.parentNode.replaceChild(newworkspaceElement, workspaceElement);
+
+		successMsg.innerHTML = "Workspace saved!";
+	  setTimeout(success, 1700);
+	} else {
+		workspaces[id] = newWorkspace;
+		order.unshift(id);
+		chrome.storage.sync.set({workspaces: workspaces, order: order});
+
+		updateNoWorkspaceMessage();
+		showNewWorkspace(workspaceName, id);
+
+		successMsg.innerHTML = "Workspace created!";
+	  setTimeout(success, 1700);
+	}
 }
 
 // Delay for Successful Creation
-function success(workspaceName) {
+function success() {
   toggleSidebar();
   resetWorkspaceForm();
 }
-
 
 // Add New Workspace to View
 function showNewWorkspace(workspaceName, id) {
   var workspacesDiv = document.getElementById("workspaces");
   var firstWorkspace = document.getElementsByClassName("workspaceItem")[0];
   var workspace = createWorkspaceButton(workspaceName, id);
-	if (editMode) {
-		workspace.style.float = "left";
-	}
   workspacesDiv.insertBefore(workspace, firstWorkspace);
 	$('#workspaces').animate({scrollLeft: 0}, 400);
 }
 
+document.getElementById("deleteWorkspace").onclick = function() {
+	var workspace = document.getElementById(currentID);
+	var index = order.indexOf(currentID);
+	var	successMsg = document.getElementById("workspaceSuccess");
+
+	if (index > -1) {
+	    order.splice(index, 1);
+	}
+
+	delete workspaces[currentID];
+
+	workspace.parentNode.removeChild(workspace);
+
+	chrome.storage.sync.set({workspaces: workspaces, order: order});
+
+	updateNoWorkspaceMessage();
+
+	successMsg.innerHTML = "Workspace deleted!";
+	setTimeout(success, 1700);
+}
 
 // Load Workspaces on Startup
 function initializeWorkspaces() {
@@ -187,13 +227,17 @@ function createWorkspaceButton(workspaceName, id) {
 	workspace.id = id;
   workspace.onclick = function() {
 		if (editMode) {
+			currentID = workspace.id;
 			openEditSideBar(workspace.id);
 		}
 		else {
 	    openWorkspace(workspaceName, id);
-			showHelperMessage(workspaceNameText + " WORKSPACE HAS BEEN LAUNCHED.", 5000)
+			showHelperMessage(workspaceNameText + " WORKSPACE HAS BEEN LAUNCHED", 5000)
 			setTimeout(closeLauncher, 3000);
 		}
+	}
+	if (editMode) {
+		workspace.style.float = "left";
 	}
 
   return workspace;
@@ -245,8 +289,10 @@ function resetWorkspaceForm() {
 
 // Handle Clicking of Add Workspace Button
 document.getElementById("addWorkspaceButton").onclick = function() {
-  // TODO: ensure workspace form is in sidebar
-  toggleSidebar();
+	var deleteButton = document.getElementById('deleteWorkspace');
+	deleteButton.style.display = "none";
+	resetWorkspaceForm();
+	toggleSidebar();
 }
 
 // Show All Workspace View
@@ -324,7 +370,7 @@ document.getElementById("workspacesEditButton").onclick = function() {
 	$("#workspacesDoneButton").show();
 	$("#workspacesBackButton").hide();
 
-	showHelperMessage("DRAG & DROP WORKSPACES TO REORDER<br>OR CLICK TO EDIT A WORKSPACE", 4000)
+	showHelperMessage("DRAG & DROP TO REORDER or CLICK TO EDIT", 4000)
 }
 
 function saveOrder() {
@@ -334,12 +380,15 @@ function saveOrder() {
 	for (var i = 0; i < workspaceItems.length; i++) {
 		newOrder.push(workspaceItems[i].id);
 	}
+	order = newOrder;
 	chrome.storage.sync.set({order: newOrder});
 }
 
 function openEditSideBar(id) {
 	var tabs = document.getElementsByClassName('tab');
 	var workspaceName = document.getElementById('workspaceName');
+	var deleteButton = document.getElementById('deleteWorkspace');
+	deleteButton.style.display = "block";
 
   while(tabs[0]) {
     tabs[0].parentNode.removeChild(tabs[0]);

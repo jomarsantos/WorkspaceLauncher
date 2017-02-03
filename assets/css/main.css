@@ -159,21 +159,43 @@ SIDEBAR - WORKSPACE
   color: #babebb;
 }
 
-#saveWorkspace {
-  margin: 30px 75px 0px 75px;
-  display: block;
-  height: 40px;
-  width: 100px;
-  font-size: 12px;
-  background-color: #0a0a0b;
+#sidebarButtons {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.sidebarButton {
+	display: block;
   border-radius: 10px;
   border-style: none;
   cursor: pointer;
-  color: #737986;
+	margin: 10px auto;
+}
+
+#saveWorkspace {
+	height: 40px;
+	width: 100px;
+	font-size: 12px;
+	background-color: #0a0a0b;
+	color: #737986;
 }
 
 #saveWorkspace:hover {
 	background-color: #050506;
+	color: #8a92a2;
+}
+
+#deleteWorkspace {
+	display: none;
+	height: 30px;
+	width: 60px;
+	font-size: 10px;
+  background-color: #421616;
+  color: #737986;
+}
+
+#deleteWorkspace:hover {
+	background-color: #3c1313;
 	color: #8a92a2;
 }
 
@@ -300,7 +322,7 @@ VIEW - WORKSPACE
 
 .workspace {
 	border-radius: 10px;
-  padding: 0px;
+  padding: 4px 0 0 0;
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 10px;
@@ -308,6 +330,7 @@ VIEW - WORKSPACE
   height: 50px;
   width: 150px;
   text-align: center;
+	vertical-align: middle;
   text-decoration: none;
   display: inline-block;
   color: #737986;
@@ -339,10 +362,9 @@ VIEW - WORKSPACE
 
 .workspaceName {
   margin: 0px;
-  text-align: center;
-  width: 150px;
-  height: 10px;
-  padding: 16px 0px;
+  width: 140px;
+	height: auto;
+  padding: 0px 5px;
   word-wrap: break-word;;
   white-space: normal;
 }
@@ -362,13 +384,14 @@ VIEW - WORKSPACE
 #helperMessageContainer {
 	display: none;
 	text-align: center;
-	padding: 5px 10px 5px 10px;
+	padding: 5px 15px;
 	height: auto;
-	width: 400px;
-	position: absolute;
 	top: 0;
-	left: 50%;
-	margin-left: -210px;
+	right: 0;
+	left: 0;
+	margin-right: auto;
+	margin-left: auto;
+	position: absolute;
 	background-color: #000000;
 	color: #ffffff;
 	font-size: 14px;

@@ -73,11 +73,14 @@
 
         <div id="nameContainer">
           <h5>WORKSPACE NAME</h5>
-          <input  type="text" id="workspaceName" maxlength="18">
+          <input  type="text" id="workspaceName" maxlength="24">
         </div> <!-- nameContainer -->
 
-        <button class="button fade" id="saveWorkspace" type="submit">SAVE</button>
-        <p id="workspaceError"></p>
+				<div id="sidebarButtons">
+	        <button class="sidebarButton button fade" id="saveWorkspace" type="submit">SAVE</button>
+					<button class="sidebarButton button fade" id="deleteWorkspace" type="submit">DELETE</button>
+				</div>
+				<p id="workspaceError"></p>
         <p id="workspaceSuccess"></p>
       </div> <!-- workspaceForm -->
     </div> <!-- sidebar -->

@@ -18,7 +18,7 @@ document.getElementById("createNewWorkspace").onclick = function() {
 
 			msg.innerHTML = "";
 			var workspaceName = document.getElementById("workspaceName").value;
-			var id = workspaceName.trim().replace(/\s+/g, '-').toLowerCase();
+			id = workspaceName.trim().replace(/\s+/g, '-').toLowerCase() + "-ws";
 
 			if (workspaces.hasOwnProperty(id)) {
 				msg.innerHTML = "Workspace with same name already exists.";
