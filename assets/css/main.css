@@ -185,6 +185,12 @@ VIEW - COMMON
 	margin: 100px auto;
   height: auto;
   width: 660px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .indexContainer {
@@ -234,6 +240,7 @@ VIEW - WORKSPACE
 ********************************/
 
 #workspacesContainer {
+	display: block;
 	padding: 10px;
   height: 120px;
   margin-bottom: 20px;
@@ -322,11 +329,7 @@ VIEW - WORKSPACE
   display: none;
 }
 
-#workspacesCancelButton {
-	display: none;
-}
-
-#workspacesSaveButton {
+#workspacesDoneButton {
 	display: none;
 }
 

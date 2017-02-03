@@ -2,6 +2,7 @@ var numPinnedTabs = 0;
 var numRegularTabs = 0;
 var workspaces = {};
 var order = [];
+var editMode = false;
 
 /////////////////////////
 // COMMON
@@ -45,7 +46,7 @@ document.getElementById("addRegularTab").onclick = function() {
 };
 
 // Add Tab Entry
-function addTab(type) {
+function addTab(type, site) {
   var tabs = document.getElementById(type + "s");
   var tab = document.querySelector("#tabTemplate");
   var clone = document.importNode(tab.content, true);
@@ -53,6 +54,9 @@ function addTab(type) {
   var removeTab = clone.querySelector("button");
 
   input.className = type;
+	if (site) {
+		input.value = site;
+	}
   removeTab.onclick = function() {
     this.parentNode.remove();
   }
@@ -75,7 +79,7 @@ document.getElementById("saveWorkspace").onclick = function() {
 
   errorMsg.innerHTML = "";
   workspaceName = document.getElementById("workspaceName").value;
-  id = workspaceName.trim().replace(/\s+/g, '-').toLowerCase();
+  id = workspaceName.trim().replace(/\s+/g, '-').toLowerCase() + "-ws";
 
   for (i = 0; i < pinnedTabs.length; i++) {
     tab = {
@@ -140,6 +144,9 @@ function showNewWorkspace(workspaceName, id) {
   var workspacesDiv = document.getElementById("workspaces");
   var firstWorkspace = document.getElementsByClassName("workspaceItem")[0];
   var workspace = createWorkspaceButton(workspaceName, id);
+	if (editMode) {
+		workspace.style.float = "left";
+	}
   workspacesDiv.insertBefore(workspace, firstWorkspace);
 	$('#workspaces').animate({scrollLeft: 0}, 400);
 }
@@ -162,8 +169,7 @@ function loadWorkspaces() {
 
 	for (i = 0; i < order.length; i++) {
 		workspaceName = workspaces[order[i]].name;
-		id = workspaceName.replace(/\s+/g, '-').toLowerCase();
-		workspace = createWorkspaceButton(workspaceName, id);
+		workspace = createWorkspaceButton(workspaceName, order[i]);
 		workspacesDiv.appendChild(workspace);
 	}
 }
@@ -180,9 +186,14 @@ function createWorkspaceButton(workspaceName, id) {
 
 	workspace.id = id;
   workspace.onclick = function() {
-    openWorkspace(workspaceName, id);
-		showHelperMessage(workspaceNameText + " WORKSPACE HAS BEEN LAUNCHED.", 2500)
-		setTimeout(closeLauncher, 3500);
+		if (editMode) {
+			openEditSideBar(workspace.id);
+		}
+		else {
+	    openWorkspace(workspaceName, id);
+			showHelperMessage(workspaceNameText + " WORKSPACE HAS BEEN LAUNCHED.", 5000)
+			setTimeout(closeLauncher, 3000);
+		}
 	}
 
   return workspace;
@@ -240,42 +251,50 @@ document.getElementById("addWorkspaceButton").onclick = function() {
 
 // Show All Workspace View
 document.getElementById("workspaceTitle").onclick = function() {
-  var workspaces = document.getElementById("workspaces");
-	var workspacesContainer = document.getElementById("workspacesContainer");
-	var websitesContainer = document.getElementById("websitesContainer");
-
-	workspaces.style.whiteSpace = "normal";
-	workspaces.style.height = "auto";
-  workspaces.style.width = "115%";
-  workspaces.style.overflowX = "hidden";
-  workspaces.style.overflowY = "scroll";
-	workspaces.style.padding = "0px";
-	workspacesContainer.style.height = "auto";
-	websitesContainer.style.display = "none";
-
-  $("#workspacesBackButton").show();
-	$("#workspacesEditButton").show();
-  $("#organizeWorkspacesButton").show();
+	toggleWorkspaces();
 }
 
 // Hide All Workspace View
 document.getElementById("workspacesBackButton").onclick = function() {
+	toggleWorkspaces();
+}
+
+function toggleWorkspaces() {
 	var workspaces = document.getElementById("workspaces");
 	var workspacesContainer = document.getElementById("workspacesContainer");
 	var websitesContainer = document.getElementById("websitesContainer");
 
-	workspaces.style.whiteSpace = "nowrap";
-	workspaces.style.height = "210px";
-  workspaces.style.width = "auto";
-	workspaces.style.overflowX = "scroll";
-  workspaces.style.overflowY = "hidden";
-	workspaces.style.padding = "0px 0px 50px 0px";
-	workspacesContainer.style.height = "120px";
-	websitesContainer.style.display = "block";
+	if (editMode) {
+		return;
+	}
 
-  $("#workspacesBackButton").hide();
-	$("#workspacesEditButton").hide();
-  $("#organizeWorkspacesButton").hide();
+	if (window.getComputedStyle(workspaces).getPropertyValue("overflow-y") == "hidden" ||
+		workspaces.style.overflowY == "hidden") {
+		workspaces.style.whiteSpace = "normal";
+		workspaces.style.height = "auto";
+		workspaces.style.width = "115%";
+		workspaces.style.overflowX = "hidden";
+		workspaces.style.overflowY = "scroll";
+		workspaces.style.padding = "0px";
+		workspacesContainer.style.height = "auto";
+		websitesContainer.style.display = "none";
+
+		$("#workspacesBackButton").show();
+		$("#workspacesEditButton").show();
+	} else {
+		workspaces.style.whiteSpace = "nowrap";
+		workspaces.style.height = "210px";
+		workspaces.style.width = "auto";
+		workspaces.style.overflowX = "scroll";
+		workspaces.style.overflowY = "hidden";
+		workspaces.style.padding = "0px 0px 50px 0px";
+		workspacesContainer.style.height = "120px";
+		websitesContainer.style.display = "block";
+
+		$("#workspacesBackButton").hide();
+		$("#workspacesEditButton").hide();
+		$("#workspacesDoneButton").hide();
+	}
 }
 
 // Helper for Correct Timing of Back Button
@@ -286,7 +305,8 @@ function setDefaultWorkspaceDiv() {
 }
 
 // Activate Organization of Workspaces
-document.getElementById("organizeWorkspacesButton").onclick = function() {
+document.getElementById("workspacesEditButton").onclick = function() {
+	editMode = true;
 	this.className = this.className + " activeButton";
 	this.style.cursor = "default";
 
@@ -296,66 +316,68 @@ document.getElementById("organizeWorkspacesButton").onclick = function() {
     handle: 'button',
     cancel: '',
     placeholder: 'placeholder',
-    forcePlaceholderSize: true
+    forcePlaceholderSize: true,
+		update: function(event, ui) {
+			saveOrder();
+		}
   }).disableSelection();
-	$("#workspacesCancelButton").show();
-	$("#workspacesSaveButton").show();
-
+	$("#workspacesDoneButton").show();
 	$("#workspacesBackButton").hide();
-	$("#workspacesEditButton").hide();
-	$("#addWorkspaceButton").hide();
 
-	showHelperMessage("DRAG AND DROP WORKSPACES TO REORDER.<br> DON'T FORGET TO SAVE YOUR CHANGES.", 4000)
+	showHelperMessage("DRAG & DROP WORKSPACES TO REORDER<br>OR CLICK TO EDIT A WORKSPACE", 4000)
 }
 
-document.getElementById("workspacesSaveButton").onclick = function() {
-	var organizeButton = document.getElementById("organizeWorkspacesButton");
+function saveOrder() {
 	var workspaceItems = document.getElementsByClassName('workspaceItem');
 	var newOrder = [];
 
 	for (var i = 0; i < workspaceItems.length; i++) {
-		// console.log(workspaceItems[i].id);
 		newOrder.push(workspaceItems[i].id);
 	}
-
 	chrome.storage.sync.set({order: newOrder});
-
-	organizeButton.className = "headerButton fade";
-	organizeButton.style.cursor = "pointer";
-	$('#workspaces li').css('float','none');
-	$("#workspaces").sortable({
-		disabled: true
-	});
-	$("#workspacesCancelButton").hide();
-	$("#workspacesSaveButton").hide();
-
-	$("#workspacesBackButton").show();
-	$("#workspacesEditButton").show();
-	$("#addWorkspaceButton").show();
 }
 
-// Cancel Organization of Workspaces
-document.getElementById("workspacesCancelButton").onclick = function() {
-	var organizeButton = document.getElementById("organizeWorkspacesButton");
+function openEditSideBar(id) {
+	var tabs = document.getElementsByClassName('tab');
+	var workspaceName = document.getElementById('workspaceName');
+
+  while(tabs[0]) {
+    tabs[0].parentNode.removeChild(tabs[0]);
+  }
+
+	workspace = getWorkspace(id);
+	tabs = workspace.tabs;
+
+	var tab, type;
+	for (var i = 0; i < tabs.length; i++) {
+		tab = tabs[i];
+		if (tab.pinned) {
+			type = "pinnedTab";
+		} else {
+			type = "regularTab";
+		}
+		addTab(type, tab.url)
+	}
+
+	workspaceName.value = workspace.name;
+	toggleSidebar();
+}
+
+// Done Editing of Workspaces
+document.getElementById("workspacesDoneButton").onclick = function() {
+	editMode = false;
+	var editButton = document.getElementById("workspacesEditButton");
 	var workspaceItems = document.getElementsByClassName('workspaceItem');
 
-	organizeButton.className = "headerButton fade";
-	organizeButton.style.cursor = "pointer";
+	editButton.className = "headerButton fade";
+	editButton.style.cursor = "pointer";
 	$('#workspaces li').css('float','none');
 	$("#workspaces").sortable({
 		disabled: true
 	});
-	$("#workspacesCancelButton").hide();
-	$("#workspacesSaveButton").hide();
 
+	$("#workspacesDoneButton").hide();
 	$("#workspacesBackButton").show();
-	$("#workspacesEditButton").show();
-	$("#addWorkspaceButton").show();
-
-	while(workspaceItems[0]) {
-		workspaceItems[0].parentNode.removeChild(workspaceItems[0]);
-	}
-	loadWorkspaces();
 }
 
 // Show helper message
@@ -368,7 +390,6 @@ function showHelperMessage(message, duration) {
 // Hide helper message
 function hideHelperMessage() {
 	$("#helperMessageContainer").slideUp();
-	$("#helperMessage").html("");
 }
 
 // Update No Workspace Message
