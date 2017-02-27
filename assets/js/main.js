@@ -326,7 +326,6 @@ function toggleWorkspaces() {
 		websitesContainer.style.display = "none";
 
 		$("#workspacesBackButton").show();
-		$("#workspacesEditButton").show();
 	} else {
 		workspaces.style.whiteSpace = "nowrap";
 		workspaces.style.height = "210px";
@@ -338,7 +337,6 @@ function toggleWorkspaces() {
 		websitesContainer.style.display = "block";
 
 		$("#workspacesBackButton").hide();
-		$("#workspacesEditButton").hide();
 		$("#workspacesDoneButton").hide();
 	}
 }

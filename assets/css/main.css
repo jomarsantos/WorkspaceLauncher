@@ -355,10 +355,6 @@ VIEW - WORKSPACE
 	display: none;
 }
 
-#workspacesEditButton {
-	display: none;
-}
-
 .workspaceName {
   margin: 0px;
   width: 140px;
