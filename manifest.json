@@ -4,7 +4,7 @@
   "name": "Workspace Launcher",
 	"short_name": "Workspace Launcher",
   "description": "Quickly Launch Custom Workspaces",
-  "version": "1.1",
+  "version": "1.2",
 
   "browser_action": {
     "default_icon": {
