@@ -3,6 +3,7 @@ var numRegularTabs = 0;
 var workspaces = {};
 var order = [];
 var editMode = false;
+var workspacesToggled = false;
 var currentID = "";
 
 /////////////////////////
@@ -300,18 +301,28 @@ document.getElementById("workspaceTitle").onclick = function() {
 	toggleWorkspaces();
 }
 
+document.getElementById("workspacesShowAllButton").onclick = function() {
+	toggleWorkspaces();
+}
+
+
 // Hide All Workspace View
 document.getElementById("workspacesBackButton").onclick = function() {
 	toggleWorkspaces();
 }
 
-function toggleWorkspaces() {
+function toggleWorkspaces(noRetoggle) {
 	var workspaces = document.getElementById("workspaces");
 	var workspacesContainer = document.getElementById("workspacesContainer");
 	var websitesContainer = document.getElementById("websitesContainer");
+	var workspacesShowAllButton = document.getElementById("workspacesShowAllButton");
 
 	if (editMode) {
 		return;
+	}
+
+	if (noRetoggle && workspacesToggled) {
+		return
 	}
 
 	if (window.getComputedStyle(workspaces).getPropertyValue("overflow-y") == "hidden" ||
@@ -324,8 +335,9 @@ function toggleWorkspaces() {
 		workspaces.style.padding = "0px";
 		workspacesContainer.style.height = "auto";
 		websitesContainer.style.display = "none";
-
+		workspacesShowAllButton.style.display = "none"
 		$("#workspacesBackButton").show();
+		workspacesToggled = true;
 	} else {
 		workspaces.style.whiteSpace = "nowrap";
 		workspaces.style.height = "210px";
@@ -335,9 +347,11 @@ function toggleWorkspaces() {
 		workspaces.style.padding = "0px 0px 50px 0px";
 		workspacesContainer.style.height = "120px";
 		websitesContainer.style.display = "block";
+		workspacesShowAllButton.style.display = "inline-block"
 
 		$("#workspacesBackButton").hide();
 		$("#workspacesDoneButton").hide();
+		workspacesToggled = false;
 	}
 }
 
@@ -350,6 +364,7 @@ function setDefaultWorkspaceDiv() {
 
 // Activate Organization of Workspaces
 document.getElementById("workspacesEditButton").onclick = function() {
+	toggleWorkspaces(true);
 	editMode = true;
 	this.className = this.className + " activeButton";
 	this.style.cursor = "default";
